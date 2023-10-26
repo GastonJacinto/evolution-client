@@ -2,9 +2,11 @@ import './globals.css';
 import type { Metadata } from 'next';
 import { Providers } from './providers';
 import NavBar from '@/components/navbar';
+import { Toaster } from 'react-hot-toast';
+import SessionAuthProvider from '@/context/SessionAuthProvider';
 
 export const metadata: Metadata = {
-  title: 'Evolution Training',
+  title: 'OLIMPO Training',
   description: 'Evolution Training WEB PAGE',
 };
 
@@ -14,12 +16,18 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className="!scroll-smooth ">
-      <body suppressHydrationWarning={true} className="bg-[#080808] ">
-        <Providers>
-          <NavBar />
-          {children}
-        </Providers>
+    <html lang="en" className="!scroll-smooth bg-zinc-900">
+      <body
+        suppressHydrationWarning={true}
+        className="bg-zinc-900 w-full] h-[100vh] "
+      >
+        <Toaster reverseOrder={false} />
+        <SessionAuthProvider>
+          <Providers>
+            <NavBar />
+            {children}
+          </Providers>
+        </SessionAuthProvider>
       </body>
     </html>
   );

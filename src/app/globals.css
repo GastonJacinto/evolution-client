@@ -7,7 +7,17 @@
   font-weight: normal;
   font-style: normal;
 }
-
+.columnName {
+  @apply font-semibold text-black;
+}
 .h2SectionOne {
   @apply font-bold  text-[4rem] cursor-default;
+}
+
+.registerIcons {
+  @apply text-black text-2xl;
+}
+
+.buttonShowPass {
+  @apply text-2xl text-default-400 pointer-events-none;
 }
