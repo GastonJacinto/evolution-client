@@ -13,26 +13,44 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         let data;
-        const res = await fetch(
-          `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signIn`,
-          {
-            method: 'POST',
-            body: JSON.stringify({
-              email: credentials?.email,
-              password: credentials?.password,
-            }),
-            headers: { 'Content-Type': 'application/json' },
+        try {
+          const res = await fetch(
+            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signIn`,
+            {
+              method: 'POST',
+              body: JSON.stringify({
+                email: credentials?.email,
+                password: credentials?.password,
+              }),
+              headers: { 'Content-Type': 'application/json' },
+            }
+          );
+          data = await res.json();
+          if (data.statusCode) {
+            throw new Error(getErrorMessage(data));
           }
-        );
-        data = await res.json();
-        if (data.statusCode) {
-          throw new Error(getErrorMessage(data));
+        } catch (error) {
+          return {
+            error,
+          };
         }
-        cookies().set('token', data.token, { secure: true });
+
         return data;
       },
     }),
   ],
+  callbacks: {
+    async jwt({ token, user }) {
+      return { ...token, ...user };
+    },
+    async session({ session, token }) {
+      session.user = token as any;
+      return session;
+    },
+  },
+  pages: {
+    signIn: '/auth/login', // Ruta de inicio de sesión personalizada
+  },
 });
 
 export { handler as GET, handler as POST };

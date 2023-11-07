@@ -1,12 +1,14 @@
 import { configureStore } from '@reduxjs/toolkit';
-import myClassesSlice from './features/myClassesSlice';
+import gymClassesSlice from './features/gymClassesSlice';
 import drawerSelectorSlice from './features/drawerSelectorSlice';
 import myProfileSlice from './features/userProfileSlice';
+import instructorAndUsersSlice from './features/instructorsAndUsersSlice';
 export const store = configureStore({
   reducer: {
-    myClassesSlice,
+    gymClassesSlice,
     drawerSelectorSlice,
     myProfileSlice,
+    instructorAndUsersSlice,
   },
 });
 

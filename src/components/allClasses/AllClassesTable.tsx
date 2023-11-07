@@ -16,27 +16,36 @@ import {
   Spinner,
 } from '@nextui-org/react';
 import { useAppDispatch, useAppSelector } from '@/utils/hooks';
-import { ActiveAccount, GymClassType, UserType } from '@/utils/types';
+import { ActiveAccount } from '@/utils/types';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import { reserveClass } from '@/app/api/actions/reserveClass';
 import toast from 'react-hot-toast';
-import { getAllClasses } from '@/app/api/actions/getClasses';
-import { getClasses } from '@/app/redux/features/myClassesSlice';
+import { GiGymBag } from 'react-icons/gi';
+import { BsCalendarEvent } from 'react-icons/bs';
+import { MdSportsGymnastics } from 'react-icons/md';
+import { FaPeopleRobbery } from 'react-icons/fa6';
+import { CgGym } from 'react-icons/cg';
+import { getAllClassesFunction, getUser } from '@/utils/utils';
+import { loadProfile } from '@/app/redux/features/userProfileSlice';
+import { loadAllClasses } from '@/app/redux/features/gymClassesSlice';
+import { useSession } from 'next-auth/react';
 
 export default function AllClassesTable() {
   //! ------------------ H O O K S -----------------------------
+  const dispatch = useAppDispatch();
   const [isLoading, setIsLoading] = React.useState(false);
   const [toReserve, setToReserve] = React.useState({
     idClass: '',
     student: '',
   });
+  const { data: session } = useSession();
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const classes: GymClassType[] = useAppSelector(
-    (state) => state.myClassesSlice.myClasses
-  );
+  const classes = useAppSelector((state) => state.gymClassesSlice.allClasses);
   const userProfile = useAppSelector((state) => state.myProfileSlice.myProfile);
-  const dispatch = useAppDispatch();
+  React.useEffect(() => {
+    dispatchToChargeAllClasses();
+  });
   //! ------------------ F U N C T I O N S -----------------------------
   function setDataToReserveClass(idClass: string) {
     setToReserve({
@@ -51,12 +60,40 @@ export default function AllClassesTable() {
       setIsLoading(false);
     }
     if (success) {
+      dispatchToChargeUserProfile();
+      dispatchToChargeAllClasses();
       toast.success(success);
       setIsLoading(false);
     }
   }
+  async function dispatchToChargeUserProfile() {
+    if (session) {
+      const { user, error } = await getUser(session.user?.token);
+      if (user) {
+        return dispatch(loadProfile(user));
+      } else {
+        return toast.error(error);
+      }
+    }
+  }
+  async function dispatchToChargeAllClasses() {
+    const { classes, error } = await getAllClassesFunction();
+    if (classes) {
+      return dispatch(loadAllClasses(classes));
+    } else if (error) {
+      return toast.error(error);
+    }
+  }
+
   //! ------------------ C O N S T A N T S -----------------------------
-  const mappedClass = classes.map((clase, i) => {
+  const mappedClass = classes?.map((clase, i) => {
+    let userInClass = false;
+    // Este forEach es para verificar si el usuario ya está registrado en la clase.
+    clase.students.forEach((student) => {
+      if (userProfile.id === student.id) {
+        userInClass = true;
+      }
+    });
     const unformatedDate = new Date(clase.date);
     const date = format(unformatedDate, 'EEEE, d MMMM HH:mm', {
       locale: es,
@@ -64,6 +101,7 @@ export default function AllClassesTable() {
     return {
       ...clase,
       date: date,
+      userInClass,
     };
   });
   return (
@@ -113,12 +151,13 @@ export default function AllClassesTable() {
                       <Button
                         color="success"
                         className="font-bold"
-                        onPress={() => {
+                        onPress={async () => {
                           setIsLoading(true);
-                          reservePlaceOnClass(
+                          await reservePlaceOnClass(
                             toReserve.idClass,
                             toReserve.student
                           );
+                          onClose();
                         }}
                       >
                         ¡Quiero mi reserva!
@@ -136,50 +175,85 @@ export default function AllClassesTable() {
         </Modal>
       ) : null}
       <Table
-        isStriped
+        isHeaderSticky
         className="w-[95%] max-w-[50rem] "
         aria-label="Example static collection table"
       >
         <TableHeader>
-          <TableColumn className="columnName">CLASE</TableColumn>
-          <TableColumn className="columnName">FECHA Y HORA</TableColumn>
-          <TableColumn className="columnName">INSTRUCTOR/A</TableColumn>
-          <TableColumn className="columnName text-center">
-            DISPONIBLES
+          <TableColumn>
+            <div className="columnName">
+              <GiGymBag className="text-xl" />
+              <span>CLASE</span>
+            </div>
           </TableColumn>
-          <TableColumn className="columnName text-center ">
-            RESERVAR
+          <TableColumn>
+            <div className="columnName ">
+              <BsCalendarEvent className="text-xl" />
+              <span>FECHA Y HORA</span>
+            </div>
+          </TableColumn>
+          <TableColumn>
+            {' '}
+            <div className="columnName">
+              <MdSportsGymnastics className="text-xl" />
+              <span>INSTRUCTOR/A</span>
+            </div>
+          </TableColumn>
+          <TableColumn>
+            <div className="columnName text-center">
+              <FaPeopleRobbery className="text-xl" />
+              <span>DISPONIBLES</span>
+            </div>
+          </TableColumn>
+          <TableColumn>
+            <div className="columnName text-center ">
+              <CgGym className="text-xl" />
+              <span>RESERVAR</span>
+            </div>
           </TableColumn>
         </TableHeader>
-
-        <TableBody emptyContent={'No hay clases registradas.'}>
-          {mappedClass.map((clase, i) => {
+        <TableBody
+          loadingContent={<Spinner />}
+          emptyContent={'No hay clases registradas.'}
+        >
+          {mappedClass?.map((clase, i) => {
             return (
               <TableRow key={i}>
                 <TableCell key={1}>{clase.name}</TableCell>
-                <TableCell key={2}>{clase.date}</TableCell>
-                {clase.instructor.active === ActiveAccount.ACTIVE ? (
-                  <TableCell key={3}>
+                <TableCell key={2} className="capitalize">
+                  {clase.date}
+                </TableCell>
+                {clase.instructor?.active === ActiveAccount.ACTIVE ? (
+                  <TableCell key={3} className="capitalize">
                     {clase.instructor.name} {clase.instructor.lastname}
                   </TableCell>
                 ) : (
                   <TableCell key={3} className="text-red-400">
-                    No hay instructor/a asignado/a
+                    No asignado/a
                   </TableCell>
                 )}
                 <TableCell key={4} className="text-center">
                   {clase.limit}
                 </TableCell>
                 <TableCell key={5} className="text-center">
-                  <Button
-                    onPress={() => {
-                      onOpen();
-                      setDataToReserveClass(clase.id);
-                    }}
-                    className="h-5 bg-[#f59b4b] font-semibold border-gray-500 border-1"
-                  >
-                    Reservar
-                  </Button>
+                  {clase.userInClass ? (
+                    <Button
+                      isDisabled
+                      className="h-7 bg-[#f59a4b] font-semibold border-gray-500 border-1 hover:scale-105"
+                    >
+                      Reservar
+                    </Button>
+                  ) : (
+                    <Button
+                      onPress={() => {
+                        onOpen();
+                        setDataToReserveClass(clase.id);
+                      }}
+                      className="h-7 bg-[#f59b4b] font-semibold border-gray-500 border-1 hover:scale-105"
+                    >
+                      Reservar
+                    </Button>
+                  )}
                 </TableCell>
               </TableRow>
             );

@@ -17,10 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en" className="!scroll-smooth bg-zinc-900">
-      <body
-        suppressHydrationWarning={true}
-        className="bg-zinc-900 w-full] h-[100vh] "
-      >
+      <body suppressHydrationWarning={true} className="bg-zinc-900 w-full ">
         <Toaster reverseOrder={false} />
         <SessionAuthProvider>
           <Providers>

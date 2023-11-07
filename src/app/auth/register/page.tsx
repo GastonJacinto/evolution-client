@@ -2,8 +2,8 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Divider, Input, Select, SelectItem } from '@nextui-org/react';
-import { ShowedPass } from '@/utils/ShowedPass';
-import { UnshowedPass } from '@/utils/UnshowedPass';
+import { ShowedPass } from '@/components/buttons/ShowedPass';
+import { UnshowedPass } from '@/components/buttons/UnshowedPass';
 import {
   MdOutlineMailOutline,
   MdOutlineSportsGymnastics,
@@ -16,10 +16,10 @@ import { BsTelephone, BsGenderAmbiguous } from 'react-icons/bs';
 import { GiTeacher, GiGymBag } from 'react-icons/gi';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import RegisterButton from '@/components/RegisterComponents/registerButton';
+import RegisterButton from '@/components/buttons/registerButton';
 import { FormDataType, RoleEnum } from '@/utils/types';
 import { registerUser } from '../../api/actions/register';
-import InfoPopover from '@/components/RegisterComponents/registerPopover';
+import InfoPopover from '@/components/modals/popovers/registerPopover';
 
 export default function RegisterPage() {
   //!---------------------- STATES / HOOKS --------------------------
@@ -60,7 +60,6 @@ export default function RegisterPage() {
         position: 'bottom-center',
       });
       setBlockRegister(false);
-
       return;
     }
     if (role === RoleEnum.USER) {

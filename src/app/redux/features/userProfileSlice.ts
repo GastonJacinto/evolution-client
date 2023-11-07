@@ -1,4 +1,4 @@
-import { UserType } from '@/utils/types';
+import { ActiveAccount, GymClassType, UserType } from '@/utils/types';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { format, parseISO } from 'date-fns';
 
@@ -8,11 +8,11 @@ interface MyProfileState {
 
 const initialState: MyProfileState = {
   myProfile: {
-    active: false,
+    active: ActiveAccount.ACTIVE,
     birth: '',
     createdAt: '',
     deletedAt: null,
-    classes: [],
+    classes: [] as GymClassType[],
     dni: '',
     email: '',
     genre: '',
@@ -29,7 +29,7 @@ export const myProfileSlice = createSlice({
   name: 'myProfile',
   initialState,
   reducers: {
-    getProfile: (state, action: PayloadAction<UserType>) => {
+    loadProfile: (state, action: PayloadAction<UserType>) => {
       const formattedProfile: UserType = {
         ...action.payload,
         birth: format(parseISO(action.payload.birth), 'yyyy-MM-dd'),
@@ -43,5 +43,5 @@ export const myProfileSlice = createSlice({
   },
 });
 
-export const { getProfile } = myProfileSlice.actions;
+export const { loadProfile } = myProfileSlice.actions;
 export default myProfileSlice.reducer;

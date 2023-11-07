@@ -15,15 +15,12 @@ function AllClasses() {
         y: 0,
         opacity: 1,
       }}
-      className="w-full h-full flex flex-col items-center pt-[3rem]"
+      className="classesMotionDiv"
     >
-      <h3 className="text-white md:text-xl  text-center transition-all">
-        Próximas <span className="text-[#f59b4b]">clases </span>
+      <h3 className="classesH3">
+        Próximas <span className="text-[#f59b4b]">clases</span>
       </h3>
-      <Divider
-        aria-label="divider"
-        className="bg-white w-[90%] max-w-[50rem] my-4"
-      />
+      <Divider aria-label="divider" className="classesDivider" />
       <AllClassesTable />
     </motion.div>
   );

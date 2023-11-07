@@ -10,17 +10,18 @@ import {
   NavbarMenuToggle,
   NavbarMenu,
   NavbarMenuItem,
-  Dropdown,
-  DropdownTrigger,
-  Avatar,
-  DropdownMenu,
-  DropdownItem,
+  Button,
 } from '@nextui-org/react';
 import logo from '@/data/images/logo-removebg-preview.png';
 import { navLinks } from '@/data/data';
 import Image from 'next/image';
 import { usePathname } from 'next/navigation';
+import { useSession } from 'next-auth/react';
+import { BiUser } from 'react-icons/bi';
+import { useAppSelector } from '@/utils/hooks';
 export default function NavBar() {
+  const { data: session } = useSession();
+  const userProfile = useAppSelector((state) => state.myProfileSlice.myProfile);
   const pathname = usePathname();
   return (
     <Navbar isBordered className="fixed bg-black bg-opacity-60 h-[4rem] ">
@@ -98,25 +99,32 @@ export default function NavBar() {
           </NavbarItem>
         )}
       </NavbarContent>
-
-      <Dropdown placement="bottom-end">
-        <DropdownTrigger>
-          <Avatar
-            isBordered
-            as="button"
-            className="transition-transform"
-            color="warning"
-            name="Jason Hughes"
-            size="sm"
-            src="https://i.pravatar.cc/150?u=a042581f4e29026704d"
-          />
-        </DropdownTrigger>
-        <DropdownMenu aria-label="Profile Actions" variant="flat">
-          <DropdownItem key="login" color="success" className="text-black">
-            <Link href={'/auth/login'}>Iniciar sesión</Link>
-          </DropdownItem>
-        </DropdownMenu>
-      </Dropdown>
+      {
+        //! ----------------- ESTO SE BORRA DESPUES -----------------
+      }
+      {pathname === '/dashboard' && (
+        <Button
+          startContent={<BiUser className="registerIcons" />}
+          className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
+        >
+          <Link href={'/profile'}>Mi perfil</Link>
+        </Button>
+      )}
+      {
+        //! ----------------- ESTO SE BORRA DESPUES -----------------
+      }
+      {userProfile.email && pathname !== '/profile' ? (
+        <Button
+          startContent={<BiUser className="registerIcons" />}
+          className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
+        >
+          <Link href={'/profile'}>Mi perfil</Link>
+        </Button>
+      ) : (
+        <Button className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium ">
+          <Link href={'/auth/login'}>Iniciar sesión</Link>
+        </Button>
+      )}
       <NavbarMenu className="bg-black w-[75%] bg-opacity-60 ">
         {navLinks.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>

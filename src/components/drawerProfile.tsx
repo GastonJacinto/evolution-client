@@ -3,22 +3,31 @@
 'use client';
 import React from 'react';
 import { Listbox, ListboxItem } from '@nextui-org/react';
-import { BiArrowToRight, BiArrowToLeft } from 'react-icons/bi';
+import { BiArrowToLeft } from 'react-icons/bi';
 import { drawerOptions } from '@/data/data';
 import { RiLogoutCircleLine } from 'react-icons/ri';
 import { useAppDispatch, useAppSelector } from '@/utils/hooks';
 import { changeTab } from '@/app/redux/features/drawerSelectorSlice';
-import { UserType } from '@/utils/types';
+import { useSession, signOut } from 'next-auth/react';
+import { useRouter } from 'next/navigation';
+
 const DrawerProfile = () => {
-  //!---------------------- HOOKS -------------------
+  //!---------------------- H O O K S -------------------
   const [open, setOpen] = React.useState(false);
   const toggleOpen = () => {
     setOpen(!open);
   };
+  const router = useRouter();
   const userProfile = useAppSelector((state) => state.myProfileSlice.myProfile);
   const dispatch = useAppDispatch();
-  //!---------------------- FUNCTIONS -------------------
-
+  //!---------------------- F U N C T I O N S -------------------
+  const handleSignOut = async () => {
+    await signOut({
+      redirect: false, // Evita la redirección automática después del cierre de sesión
+      callbackUrl: '/auth/login', // Ruta a la que quieres redirigir al usuario después de cerrar sesión
+    });
+    router.push('/auth/login');
+  };
   return (
     <div
       className={`z-10 mt-[5rem] h-full fixed flex flex-col transition-all  ${
@@ -29,12 +38,12 @@ const DrawerProfile = () => {
     >
       <button
         onClick={toggleOpen}
-        className="absolute z-20 top-0 right-0 w-[2rem] h-[2rem]flex items-center justify-center transition-all"
+        className="absolute z-20 top-1 right-0 w-[2rem] h-[2rem]flex items-center justify-center transition-all"
       >
         {open ? (
           <BiArrowToLeft className="w-[2rem] h-[2rem] transition-all text-white" />
         ) : (
-          <BiArrowToRight className="w-[2rem] h-[2rem] transition-all text-white" />
+          <BiArrowToLeft className="w-[2rem] h-[2rem] -rotate-180 transition-all bg-gray-500 bg-opacity-30 rounded-full text-white" />
         )}
       </button>
       <div
@@ -74,7 +83,12 @@ const DrawerProfile = () => {
             );
           })}
         </div>
-        <div className="fixed bottom-2 flex items-center w-[12rem] p-1 justify-center gap-2 border-gray-500 border-1 rounded-xl bg-zinc-950 bg-opacity-30 group hover:scale-105 transition-all cursor-pointer active:scale-100">
+        <div
+          onClick={() => {
+            handleSignOut();
+          }}
+          className="fixed bottom-2 flex items-center w-[12rem] p-1 justify-center gap-2 border-gray-500 border-1 rounded-xl bg-zinc-950 bg-opacity-30 group hover:scale-105 transition-all cursor-pointer active:scale-100"
+        >
           <RiLogoutCircleLine className="w-[1rem] h-[1rem] group-hover:-translate-x-5 group-hover:scale-125 transition-all" />{' '}
           Cerrar sesión
         </div>

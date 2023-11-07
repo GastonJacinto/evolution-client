@@ -17,6 +17,18 @@ export const navLinks = [
   },
 ] as const;
 
+export const dashboardButtons = [
+  {
+    name: 'Clases',
+  },
+  { name: 'Crear clase' },
+
+  { name: 'Instructores' },
+  {
+    name: 'Usuarios',
+  },
+] as const;
+
 export const planes = [
   {
     name: 'Plan INICIAL',

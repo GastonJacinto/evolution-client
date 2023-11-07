@@ -1,55 +1,44 @@
 'use client';
 import React from 'react';
-import { motion } from 'framer-motion';
 import DrawerProfile from '@/components/drawerProfile';
-import UserProfile from '@/components/profile';
 import { useAppDispatch, useAppSelector } from '@/utils/hooks';
-import MyClassesTable from '@/components/myClassesTable';
-import AllClasses from '@/components/allClasses';
-import { getUserProfile } from '../api/actions/getUserProfile';
-import { getProfile } from '../redux/features/userProfileSlice';
+import AllClasses from '@/components/allClasses/allClasses';
+import { loadProfile } from '../redux/features/userProfileSlice';
 import toast from 'react-hot-toast';
-import MyClasses from '@/components/myClasses';
-import { getAllClasses } from '../api/actions/getClasses';
-import { getClasses } from '../redux/features/myClassesSlice';
+import MyClasses from '@/components/myClasses/myClasses';
+import { loadAllClasses } from '../redux/features/gymClassesSlice';
+import { getAllClassesFunction, getUser } from '@/utils/utils';
+import { useSession } from 'next-auth/react';
 
 export default function Profile() {
   //!----------- HOOKS -----------------
+  const { data: session } = useSession();
   const tab = useAppSelector((state) => state.drawerSelectorSlice.tab);
-  const classes = useAppSelector((state) => state.myClassesSlice.myClasses);
-
   const dispatch = useAppDispatch();
   React.useEffect(() => {
-    getUser();
+    dispatchToChargeUserProfile();
     getClassesToTable();
-  }, [classes]);
+  });
   //!----------- FUNCTIONS -----------------
   async function getClassesToTable() {
-    const classes = await getAllClasses();
-    dispatch(getClasses(classes));
-    return;
-  }
-  async function getUser() {
-    try {
-      const data = await getUserProfile();
-      if (!data) {
-        return toast.error('Hubo un error al buscar tu perfil.', {
-          position: 'top-right',
-        });
-      } else if ('error' in data) {
-        return toast.error('Hubo un error al buscar tu perfil.', {
-          position: 'top-right',
-        });
-      } else {
-        dispatch(getProfile(data));
-      }
-    } catch (error) {
-      return toast.error('Hubo un error al buscar tu perfil.', {
-        position: 'top-right',
-      });
+    const { classes, error } = await getAllClassesFunction();
+    if (error) {
+      return toast.error(error);
+    }
+    if (classes) {
+      return dispatch(loadAllClasses(classes));
     }
   }
-
+  async function dispatchToChargeUserProfile() {
+    if (session) {
+      const { user, error } = await getUser(session.user?.token);
+      if (user) {
+        return dispatch(loadProfile(user));
+      } else {
+        return toast.error(error);
+      }
+    }
+  }
   const displayInfo = (key: number) => {
     switch (key) {
       case 1:
@@ -59,7 +48,7 @@ export default function Profile() {
       case 3:
         return <AllClasses />;
       default:
-        return <UserProfile />;
+        return <MyClasses />;
     }
   };
 

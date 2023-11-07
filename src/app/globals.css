@@ -8,16 +8,27 @@
   font-style: normal;
 }
 .columnName {
-  @apply font-semibold text-black;
+  @apply font-semibold text-black flex items-center gap-2;
 }
 .h2SectionOne {
   @apply font-bold  text-[4rem] cursor-default;
 }
-
 .registerIcons {
   @apply text-black text-2xl;
 }
-
 .buttonShowPass {
   @apply text-2xl text-default-400 pointer-events-none;
+}
+.classesH3 {
+  @apply text-white md:text-xl  text-center transition-all tracking-[.2rem];
+}
+.classesMotionDiv {
+  @apply w-full h-full flex flex-col items-center pt-[4rem];
+}
+.classesDivider {
+  @apply bg-white w-[90%] max-w-[50rem] my-4;
+}
+
+.dashboardClassesTableButtons {
+  @apply flex items-center justify-center w-[2rem] h-[2rem] rounded-full font-semibold hover:bg-[#f59a4bb1] transition-all;
 }

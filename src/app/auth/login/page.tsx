@@ -2,10 +2,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Input } from '@nextui-org/react';
-import { ShowedPass } from '@/utils/ShowedPass';
-import { UnshowedPass } from '@/utils/UnshowedPass';
+import { ShowedPass } from '@/components/buttons/ShowedPass';
+import { UnshowedPass } from '@/components/buttons/UnshowedPass';
 import toast from 'react-hot-toast';
-import LoginButton from '@/components/loginButton';
+import LoginButton from '@/components/buttons/loginButton';
 import { signIn, useSession } from 'next-auth/react';
 import { setTimeout } from 'timers';
 import { useRouter } from 'next/navigation';
@@ -25,6 +25,7 @@ export default function Login() {
       email,
       password,
       redirect: false,
+      callbackUrl: '/profile',
     });
     if (responseNextAuth?.error) {
       toast.error(responseNextAuth.error, {

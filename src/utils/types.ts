@@ -18,7 +18,6 @@ export enum ActiveAccount {
   INACTIVE = 'inactive',
   BANNED = 'banned',
 }
-
 export interface InstructorType {
   active: ActiveAccount;
   birth: string;
@@ -35,6 +34,12 @@ export interface InstructorType {
   phone: string;
   role: string;
 }
+export type CreateClassType = {
+  name: string;
+  date: string;
+  limit: number;
+  instructor?: InstructorType;
+};
 export type GymClassType = {
   id: string;
   instructor: InstructorType;
@@ -43,8 +48,16 @@ export type GymClassType = {
   name: string;
   students: UserType[];
 };
-//!---------------- STATES TYPES ---------------
+
+//! ---------------- STATES TYPES ---------------
+
+//! ----------------- ENUMS ----------------
 export enum RoleEnum {
   USER = 'user',
   INSTRUCTOR = 'instructor',
+  ADMIN = 'admin',
+}
+export enum EnableOrDisableEnum {
+  ENABLE = 'enable',
+  DISABLE = 'disable',
 }
