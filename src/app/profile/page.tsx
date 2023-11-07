@@ -7,17 +7,23 @@ import { loadProfile } from '../redux/features/userProfileSlice';
 import toast from 'react-hot-toast';
 import MyClasses from '@/components/myClasses/myClasses';
 import { loadAllClasses } from '../redux/features/gymClassesSlice';
-import { getAllClassesFunction, getUser } from '@/utils/utils';
+import {
+  deletingClassesToInactive,
+  getAllClassesFunction,
+  getUser,
+} from '@/utils/utils';
 import { useSession } from 'next-auth/react';
 
 export default function Profile() {
   //!----------- HOOKS -----------------
   const { data: session } = useSession();
   const tab = useAppSelector((state) => state.drawerSelectorSlice.tab);
+  const classes = useAppSelector((state) => state.gymClassesSlice.allClasses);
   const dispatch = useAppDispatch();
   React.useEffect(() => {
     dispatchToChargeUserProfile();
     getClassesToTable();
+    deletingClassesToInactive(classes);
   });
   //!----------- FUNCTIONS -----------------
   async function getClassesToTable() {

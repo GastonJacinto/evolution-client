@@ -11,6 +11,7 @@ import { changeTab } from '@/app/redux/features/drawerSelectorSlice';
 import { useSession, signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
 import { MdClass } from 'react-icons/md';
+import { GiToken } from 'react-icons/gi';
 
 const DrawerProfile = () => {
   //!---------------------- H O O K S -------------------
@@ -64,7 +65,7 @@ const DrawerProfile = () => {
         <div className="mt-10 w-full flex flex-col cursor-default">
           <div className="group mx-1 p-2 text-center border-1 rounded-md bg-zinc-700 transition-all">
             <p className="flex items-center gap-2">
-              <MdClass className="text-3xl" /> Créditos restantes:{' '}
+              <GiToken className="text-3xl" /> Créditos restantes:{' '}
               <span className="group-hover:scale-125 transition-all ">
                 {userProfile.remaining_classes}
               </span>

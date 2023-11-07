@@ -6,7 +6,6 @@ export const enableOrDisableInstructor = async (
   action: EnableOrDisableEnum
 ) => {
   let data;
-  console.log(instructorId, 'action' + action);
   const res = await fetch(
     `${process.env.NEXT_PUBLIC_BACKEND_URL}/instructors/${action}/${instructorId}`,
     {

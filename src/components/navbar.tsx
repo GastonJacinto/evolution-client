@@ -102,18 +102,24 @@ export default function NavBar() {
       {
         //! ----------------- ESTO SE BORRA DESPUES -----------------
       }
-      {userProfile.email && pathname === '/' ? (
+      {/* {userProfile.email && pathname === '/' ? (
         <Button className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium ">
           <Link href={'/auth/login'}>Iniciar sesión</Link>
         </Button>
-      ) : (
-        <Button
-          startContent={<BiUser className="registerIcons" />}
-          className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
-        >
-          <Link href={'/profile'}>Mi perfil</Link>
-        </Button>
-      )}
+      ) : ( */}
+      <Button
+        startContent={<BiUser className="registerIcons" />}
+        className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
+      >
+        <Link href={'/profile'}>Mi perfil</Link>
+      </Button>
+      {/* )} */}
+      <Button
+        startContent={<BiUser className="registerIcons" />}
+        className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
+      >
+        <Link href={'/dashboard'}>Dash</Link>
+      </Button>
       {
         //! ----------------- ESTO SE BORRA DESPUES -----------------
       }

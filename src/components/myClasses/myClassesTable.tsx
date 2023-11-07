@@ -26,7 +26,7 @@ import { GiGymBag } from 'react-icons/gi';
 import { MdSportsGymnastics } from 'react-icons/md';
 import { AiFillDelete, AiOutlineDelete } from 'react-icons/ai';
 import { removeStudentFromClass } from '@/app/api/actions/removeStudentFromClass';
-import { getUser } from '@/utils/utils';
+import { deletingClassesToInactive, getUser } from '@/utils/utils';
 import { loadProfile } from '@/app/redux/features/userProfileSlice';
 import { getAllClasses } from '@/app/api/actions/getClasses';
 import { loadMyClasses } from '@/app/redux/features/gymClassesSlice';

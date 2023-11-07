@@ -5,31 +5,31 @@ import { Button } from '@nextui-org/react';
 import AllClassesDashboard from '@/components/dashboardComponents/allClasses/allClassesDashboard';
 import CreateClass from '@/components/dashboardComponents/createClass/createClass';
 import { useAppDispatch, useAppSelector } from '@/utils/hooks';
-import {
-  getInstructors,
-  getUsers,
-} from '../api/actions/getInstructorsAndUsers';
+import { getUsers } from '../api/actions/getInstructorsAndUsers';
 import {
   loadInstructors,
   loadUsers,
 } from '../redux/features/instructorsAndUsersSlice';
 import toast from 'react-hot-toast';
-import { getAllClasses } from '../api/actions/getClasses';
 import { loadAllClasses } from '../redux/features/gymClassesSlice';
 import AllInstructorsDashboard from '@/components/dashboardComponents/allInstructors/allInstructorsDashboard';
 import {
+  deletingClassesToInactive,
   getAllClassesFunction,
   getAllInstructorsFunction,
 } from '@/utils/utils';
+import { GymClassType } from '@/utils/types';
 export default function Dashboard() {
   //!---------------------- H O O K S --------------------------
   const [tab, setTab] = React.useState(0);
   const dispatch = useAppDispatch();
+  const classes = useAppSelector((state) => state.gymClassesSlice.allClasses);
 
   React.useEffect(() => {
     getAllInstructors();
     getAllUsers();
     getClassesToTable();
+    deletingClassesToInactive(classes);
   });
 
   const displayInfo = (key: number) => {
@@ -43,6 +43,7 @@ export default function Dashboard() {
     }
   };
   //!---------------------- F U N C T I O N S --------------------------
+
   async function getAllUsers() {
     const { users, error } = await getUsers();
     if (users) {

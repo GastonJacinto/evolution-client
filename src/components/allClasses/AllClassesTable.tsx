@@ -26,7 +26,11 @@ import { BsCalendarEvent } from 'react-icons/bs';
 import { MdSportsGymnastics } from 'react-icons/md';
 import { FaPeopleRobbery } from 'react-icons/fa6';
 import { CgGym } from 'react-icons/cg';
-import { getAllClassesFunction, getUser } from '@/utils/utils';
+import {
+  deletingClassesToInactive,
+  getAllClassesFunction,
+  getUser,
+} from '@/utils/utils';
 import { loadProfile } from '@/app/redux/features/userProfileSlice';
 import { loadAllClasses } from '@/app/redux/features/gymClassesSlice';
 import { useSession } from 'next-auth/react';
@@ -47,6 +51,7 @@ export default function AllClassesTable() {
     dispatchToChargeAllClasses();
   });
   //! ------------------ F U N C T I O N S -----------------------------
+
   function setDataToReserveClass(idClass: string) {
     setToReserve({
       idClass,
@@ -149,7 +154,7 @@ export default function AllClassesTable() {
                       >
                         Cancelar
                       </Button>
-                      {userProfile.remaining_classes > 1 ? (
+                      {userProfile.remaining_classes > 0 ? (
                         <Button
                           color="success"
                           className="font-bold"
