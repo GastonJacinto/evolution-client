@@ -17,7 +17,7 @@ import {
 } from '@nextui-org/react';
 import { useAppDispatch, useAppSelector } from '@/utils/hooks';
 import { BsCalendarEvent } from 'react-icons/bs';
-import { ActiveAccount } from '@/utils/types';
+import { ActiveAccount, GymClassType } from '@/utils/types';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
 import toast from 'react-hot-toast';
@@ -36,6 +36,7 @@ export default function MyClassesTable() {
   //! ------------------ H O O K S -----------------------------
   const { data: session } = useSession();
   const dispatch = useAppDispatch();
+  const [limitToDeleteReserve, setLimitToDeleteReserve] = React.useState(false);
   const [isLoading, setIsLoading] = React.useState(false);
   const [deleteReserve, setDeleteReserve] = React.useState({
     idClass: '',
@@ -72,6 +73,16 @@ export default function MyClassesTable() {
       }
     }
   }
+  function canDeleteReserve(classDate: Date) {
+    const now = new Date();
+    const timeDifference = classDate.getTime() - now.getTime();
+    const hoursDifference = timeDifference / 3600000;
+    if (hoursDifference > 2) {
+      return setLimitToDeleteReserve(false);
+    } else {
+      return setLimitToDeleteReserve(true);
+    }
+  }
   //! ------------------ C O N S T A N T S -----------------------------
   const mappedClass = userProfile.classes?.map((clase, i) => {
     const unformatedDate = new Date(clase.date);
@@ -81,8 +92,10 @@ export default function MyClassesTable() {
     return {
       ...clase,
       date: date,
+      unformatedDate: new Date(clase.date),
     };
   });
+
   return (
     <>
       {isOpen ? (
@@ -117,7 +130,7 @@ export default function MyClassesTable() {
                         </span>{' '}
                         tu reserva,{' '}
                         <span className="font-semibold">recuperarás</span> tu
-                        clase. Puedes volver a reservar un lugar si es lo que
+                        crédito. Puedes volver a reservar un lugar si es lo que
                         deseas. Recuerda que solo puedes eliminar tu reserva
                         hasta <span className="font-bold">2 (dos) horas</span>{' '}
                         antes del comienzo de la clase.
@@ -132,19 +145,29 @@ export default function MyClassesTable() {
                       >
                         Cancelar
                       </Button>
-                      <Button
-                        className="font-semibold bg-red-600 text-white"
-                        onPress={async () => {
-                          setIsLoading(true);
-                          await removePlaceFromClass(
-                            deleteReserve.idClass,
-                            deleteReserve.student
-                          );
-                          onClose();
-                        }}
-                      >
-                        Eliminar mi reserva
-                      </Button>
+                      {!limitToDeleteReserve ? (
+                        <Button
+                          isDisabled={limitToDeleteReserve}
+                          className="font-semibold bg-red-600 text-white"
+                          onPress={async () => {
+                            setIsLoading(true);
+                            await removePlaceFromClass(
+                              deleteReserve.idClass,
+                              deleteReserve.student
+                            );
+                            onClose();
+                          }}
+                        >
+                          Eliminar mi reserva
+                        </Button>
+                      ) : (
+                        <Button
+                          isDisabled
+                          className="font-semibold  bg-red-600 text-white"
+                        >
+                          Ya no puedes cancelar
+                        </Button>
+                      )}
                     </ModalFooter>
                   </>
                 ) : (
@@ -222,6 +245,7 @@ export default function MyClassesTable() {
                     onPress={() => {
                       onOpen();
                       setDataToRemoveReserve(clase.id);
+                      canDeleteReserve(clase.unformatedDate);
                     }}
                     size="sm"
                     className="h-7 bg-[#a82e2e] font-semibold border-gray-500 border-1 hover:scale-105 "

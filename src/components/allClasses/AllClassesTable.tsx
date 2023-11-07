@@ -104,6 +104,7 @@ export default function AllClassesTable() {
       userInClass,
     };
   });
+
   return (
     <>
       {isOpen ? (
@@ -131,12 +132,12 @@ export default function AllClassesTable() {
                     <ModalBody>
                       <p>
                         Ten en cuenta que al reservar un lugar,{' '}
-                        <span className="font-bold">gastarás</span> una de tus
-                        clases. No te preocupes, puedes eliminar tu reserva
+                        <span className="font-bold">gastarás</span> uno de tus
+                        créditos. No te preocupes, puedes eliminar tu reserva
                         hasta <span className="font-bold">2 (dos) horas</span>{' '}
                         antes del comienzo de la misma. Pasado este plazo,{' '}
                         <span className="font-bold">no podrás</span> eliminar tu
-                        reserva y tu clase se gastará de todas formas.
+                        reserva y tu crédito se gastará de todas formas.
                       </p>
                     </ModalBody>
                     <ModalFooter>
@@ -148,20 +149,26 @@ export default function AllClassesTable() {
                       >
                         Cancelar
                       </Button>
-                      <Button
-                        color="success"
-                        className="font-bold"
-                        onPress={async () => {
-                          setIsLoading(true);
-                          await reservePlaceOnClass(
-                            toReserve.idClass,
-                            toReserve.student
-                          );
-                          onClose();
-                        }}
-                      >
-                        ¡Quiero mi reserva!
-                      </Button>
+                      {userProfile.remaining_classes > 1 ? (
+                        <Button
+                          color="success"
+                          className="font-bold"
+                          onPress={async () => {
+                            setIsLoading(true);
+                            await reservePlaceOnClass(
+                              toReserve.idClass,
+                              toReserve.student
+                            );
+                            onClose();
+                          }}
+                        >
+                          ¡Quiero mi reserva!
+                        </Button>
+                      ) : (
+                        <Button isDisabled color="danger" className="font-bold">
+                          No tienes suficientes créditos
+                        </Button>
+                      )}
                     </ModalFooter>
                   </>
                 ) : (
@@ -239,9 +246,9 @@ export default function AllClassesTable() {
                   {clase.userInClass ? (
                     <Button
                       isDisabled
-                      className="h-7 bg-[#f59a4b] font-semibold border-gray-500 border-1 hover:scale-105"
+                      className="h-7 bg-[#f54b4b] font-bold hover:scale-105"
                     >
-                      Reservar
+                      Reservado
                     </Button>
                   ) : (
                     <Button

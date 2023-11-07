@@ -102,7 +102,11 @@ export default function NavBar() {
       {
         //! ----------------- ESTO SE BORRA DESPUES -----------------
       }
-      {pathname === '/dashboard' && (
+      {userProfile.email && pathname === '/' ? (
+        <Button className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium ">
+          <Link href={'/auth/login'}>Iniciar sesión</Link>
+        </Button>
+      ) : (
         <Button
           startContent={<BiUser className="registerIcons" />}
           className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
@@ -113,18 +117,7 @@ export default function NavBar() {
       {
         //! ----------------- ESTO SE BORRA DESPUES -----------------
       }
-      {userProfile.email && pathname !== '/profile' ? (
-        <Button
-          startContent={<BiUser className="registerIcons" />}
-          className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
-        >
-          <Link href={'/profile'}>Mi perfil</Link>
-        </Button>
-      ) : (
-        <Button className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium ">
-          <Link href={'/auth/login'}>Iniciar sesión</Link>
-        </Button>
-      )}
+
       <NavbarMenu className="bg-black w-[75%] bg-opacity-60 ">
         {navLinks.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>

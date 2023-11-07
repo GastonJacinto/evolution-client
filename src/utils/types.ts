@@ -12,7 +12,9 @@ export type FormDataType = {
 };
 
 //!------------- OBJECT TYPES -------------
-export interface UserType extends InstructorType {}
+export interface UserType extends InstructorType {
+  remaining_classes: number;
+}
 export enum ActiveAccount {
   ACTIVE = 'active',
   INACTIVE = 'inactive',
