@@ -111,7 +111,7 @@ export default function MyClassesTable() {
                       <span className="font-bold underline text-red-700">
                         eliminar
                       </span>{' '}
-                      tu reserva esta clase?
+                      tu reserva de esta clase?
                     </p>
                   ) : (
                     <p className="text-center">

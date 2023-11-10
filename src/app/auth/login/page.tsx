@@ -18,7 +18,14 @@ export default function Login() {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const router = useRouter();
+  const { data: session } = useSession();
+  React.useEffect(() => {
+    if (session) {
+      router.push('/profile');
+    }
+  });
   //!---------------- FUNCTIONS ---------------------
+  function isLoggedIn() {}
   const handleSubmit = async () => {
     const responseNextAuth = await signIn('credentials', {
       email,

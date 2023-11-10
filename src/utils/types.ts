@@ -64,6 +64,14 @@ export type CreatePaymentType = {
   };
 };
 
+export type PlanType = {
+  id: string;
+  name: string;
+  image: string;
+  description: string;
+  price: number;
+  credits: number;
+};
 //! ---------------- STATES TYPES ---------------
 
 //! ----------------- ENUMS ----------------

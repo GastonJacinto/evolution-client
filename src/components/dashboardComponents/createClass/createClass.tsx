@@ -81,7 +81,10 @@ export default function CreateClass() {
         aria-label="divider"
         className="bg-white w-[60%] max-w-[50rem] my-4"
       />
-      <form onSubmit={handleSubmit} className="w-[60%] flex flex-col gap-2">
+      <form
+        onSubmit={handleSubmit}
+        className="w-[60%] min-w-[17rem] max-w-[30rem] flex flex-col gap-2 p-2 bg-zinc-800 rounded-lg"
+      >
         <Input
           type="text"
           label="Nombre de la clase"

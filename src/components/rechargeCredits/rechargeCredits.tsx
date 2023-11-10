@@ -1,6 +1,6 @@
 'use client';
 import { getErrorMessage } from '@/utils/utils';
-import { Button } from '@nextui-org/react';
+import { Button, Divider } from '@nextui-org/react';
 import React from 'react';
 import toast from 'react-hot-toast';
 import PlanCards from '../planCard/planCards';
@@ -26,14 +26,18 @@ export default function RechargeCredits() {
   //! ----------------- H O O K S ----------------------
   return (
     <>
-      <div className="w-full text-center h-full pt-10 ">
+      <div className="w-full items-center flex flex-col text-center h-full pt-10 ">
         <h1 className=" text-white text-2xl">
           <span className="text-[#fa8c48]">Elige</span> el plan que mejor se{' '}
           <span className="text-[#fa8c48]">adapte</span> a tus{' '}
           <span className="text-[#fa8c48]">metas</span>
         </h1>
-        <div className="w-full flex items-center justify-center">
-          <p className="text-tiny w-[70%] items-center py-5 text-white font-light flex  justify-center gap-3">
+        <Divider
+          aria-label="divider"
+          className="bg-white w-[90%] max-w-[50rem] my-4"
+        />
+        <div className=" flex items-center justify-center bg-gray-700 w-[80%] max-w-[50rem] -mt-2 mb-2 rounded-lg">
+          <p className="text-tiny w-[90%] items-center p-1 text-white font-light flex justify-center gap-3">
             <IoWarning className="text-[50px] sm:text-[30px] text-yellow-400" />{' '}
             <span>
               Puedes asistir cuando quieras, pero ten en cuenta que solo podrás

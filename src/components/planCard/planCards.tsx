@@ -1,10 +1,11 @@
 import React from 'react';
-import { planes } from '@/data/data';
 import PlanCard from './planCard';
+import { useAppSelector } from '@/utils/hooks';
 export default function PlanCards() {
+  const plans = useAppSelector((state) => state.allPlansSlice.allPlans);
   return (
     <div className="flex flex-wrap gap-5 justify-center">
-      {planes.map((plan, index) => {
+      {plans?.map((plan, index) => {
         return (
           <React.Fragment key={index}>
             <PlanCard {...plan} />

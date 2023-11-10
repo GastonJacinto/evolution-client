@@ -20,6 +20,7 @@ import { FormDataType, RoleEnum } from '@/utils/types';
 import { registerUser } from '../../api/actions/register';
 import InfoPopover from '@/components/modals/popovers/registerPopover';
 import { CgGym } from 'react-icons/cg';
+import Link from 'next/link';
 
 export default function RegisterPage() {
   //!---------------------- STATES / HOOKS --------------------------
@@ -38,7 +39,6 @@ export default function RegisterPage() {
   });
   const [blockRegister, setBlockRegister] = React.useState(false);
   const [role, setRole] = React.useState<RoleEnum>(RoleEnum.USER);
-  //!------------------------ HOOKS ---------------------------
   const router = useRouter();
   //!---------------------- FUNCTIONS -----------------------
   const toggleVisibility = () => setIsVisible(!isVisible);
@@ -62,30 +62,16 @@ export default function RegisterPage() {
       });
       setPending(false);
 
-      setBlockRegister(false);
       return;
     }
-    if (role === RoleEnum.USER) {
-      toast.success('Registrado con éxito. Redireccionando.', {
-        position: 'bottom-center',
-      });
+    toast.success('Registrado con éxito. Redireccionando.', {
+      position: 'bottom-center',
+    });
 
-      setTimeout(() => {
-        router.push('/auth/login');
-        setPending(false);
-        setBlockRegister(false);
-      }, 2000);
-    } else {
+    setTimeout(() => {
+      router.push('/auth/login');
       setPending(false);
-      toast.success(
-        'Tu cuenta se encuentra pendiente de activación, puedes acercarte al establecimiento, o bien, esperar que un administrador se comunique contigo para activar tu cuenta.',
-        {
-          icon: '💪',
-          duration: 6000,
-          position: 'top-center',
-        }
-      );
-    }
+    }, 2000);
   };
   return (
     <div className="h-full pt-16 2xl:pt-32 w-full flex items-center justify-center text-center">
@@ -100,74 +86,22 @@ export default function RegisterPage() {
         }}
         className="relative w-[min(100%,30rem)] m-3 h-[35rem] flex flex-col items-center rounded-xl bg-zinc-800"
       >
-        {blockRegister ? (
-          <motion.div
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            className="absolute z-[50] bg-zinc-600 backdrop-blur-sm rounded-xl bg-opacity-60 w-full h-full"
-          ></motion.div>
-        ) : null}
         <div className="w-full relative ">
           {' '}
           <h1 className="text-white text-2xl sm:text-3xl pt-4 transition-all">
             Bienvenido a{' '}
             <span className="text-[#f59b4b] font-bold">OLIMPO</span>
           </h1>
-          <div className="absolute right-0 top-0 p-1">
-            {' '}
-            <InfoPopover />
-          </div>
         </div>
 
         <form
           onSubmit={handleSubmit}
-          className="w-[90%] p-5 h-full flex flex-col gap-2 text-white items-center"
+          className="w-[90%] p-2 h-full flex flex-col gap-2 text-white items-center"
         >
-          <Select
-            size="sm"
-            isRequired
-            title="¿Cómo quieres registrarte?"
-            color="success"
-            placeholder="¿Cómo quieres registrarte?"
-            aria-label="role"
-            radius="lg"
-            className="text-black text-center"
-            value={role}
-            onChange={(event: React.ChangeEvent<HTMLSelectElement>) => {
-              const role =
-                event.target.value === RoleEnum.INSTRUCTOR
-                  ? RoleEnum.INSTRUCTOR
-                  : RoleEnum.USER;
-              setRole(role);
-            }}
-            name="genre"
-            startContent={<GiGymBag className="registerIcons" />}
-          >
-            <SelectItem
-              key={RoleEnum.INSTRUCTOR}
-              color="warning"
-              startContent={<GiTeacher className="registerIcons" />}
-              className=" text-center"
-            >
-              Soy instructor/a
-            </SelectItem>
-
-            <SelectItem
-              color="warning"
-              className=" text-center"
-              key={RoleEnum.USER}
-              startContent={
-                <MdOutlineSportsGymnastics className="registerIcons" />
-              }
-            >
-              Soy estudiante
-            </SelectItem>
-          </Select>
-          <Divider className="bg-white" />
+          <p>
+            Ingresa tus datos para{' '}
+            <span className="text-[#f59b4b] font-bold">registrarte</span>
+          </p>
           <div className="flex gap-2 w-full">
             <Input
               type="text"
@@ -301,6 +235,13 @@ export default function RegisterPage() {
               </>
             )}
           </Button>
+          <Divider className="my-1 bg-white" />
+          <Link href={'/auth/login'}>
+            <p className="hover:underline">
+              Ya tengo una cuenta en{' '}
+              <span className="text-[#f59b4b]">OLIMPO</span>
+            </p>
+          </Link>
         </form>
       </motion.div>
     </div>

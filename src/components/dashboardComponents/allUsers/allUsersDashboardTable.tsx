@@ -58,6 +58,8 @@ export default function AllUsersDashboardTable() {
   const [isLoading, setIsLoading] = React.useState(false);
   const dispatch = useAppDispatch();
   const users = useAppSelector((state) => state.instructorAndUsersSlice.users);
+  const plans = useAppSelector((state) => state.allPlansSlice.allPlans);
+
   //! ------------------ F U N C T I O N S -----------------------------
   async function enableOrDisable(
     instructorId: string,
@@ -126,8 +128,8 @@ export default function AllUsersDashboardTable() {
                     placeholder="Selecciona un plan"
                     className="bg-gray-200"
                   >
-                    {planes?.map((plan, i) => {
-                      const credits = plan.description.split(' ')[2];
+                    {plans?.map((plan, i) => {
+                      const credits = plan.credits;
                       return (
                         <SelectItem
                           startContent={

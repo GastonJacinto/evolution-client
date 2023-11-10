@@ -3,12 +3,14 @@ import gymClassesSlice from './features/gymClassesSlice';
 import drawerSelectorSlice from './features/drawerSelectorSlice';
 import myProfileSlice from './features/userProfileSlice';
 import instructorAndUsersSlice from './features/instructorsAndUsersSlice';
+import allPlansSlice from './features/allPlansSlice';
 export const store = configureStore({
   reducer: {
     gymClassesSlice,
     drawerSelectorSlice,
     myProfileSlice,
     instructorAndUsersSlice,
+    allPlansSlice,
   },
 });
 

@@ -1,38 +1,57 @@
 /* eslint-disable @next/next/no-img-element */
 import React from 'react';
 import { motion } from 'framer-motion';
-import { planes } from '@/data/data';
 import { Button } from '@nextui-org/react';
 import { usePathname, useRouter } from 'next/navigation';
 import { FcCancel, FcMoneyTransfer } from 'react-icons/fc';
-import { SiMercadopago } from 'react-icons/si';
 import { useAppSelector } from '@/utils/hooks';
 import { getPlansForCredits } from '@/utils/utils';
 import toast from 'react-hot-toast';
-export type Plan = (typeof planes)[number];
+import { PlanType } from '@/utils/types';
 
 export default function PlanCard({
   name,
   price,
   description,
   image,
-  plan,
-}: Plan) {
+  credits,
+}: PlanType) {
   //! ------------------------- H O O K S ----------------------------
   const router = useRouter();
   const [isLoading, setIsLoading] = React.useState(false);
   const pathname = usePathname();
   const userProfile = useAppSelector((state) => state.myProfileSlice.myProfile);
   //! --------------------- F U N C T I O N S -----------------------------
-
+  async function rechargeCredits() {
+    const planData = {
+      name,
+      image,
+      price,
+      description,
+      credits,
+    };
+    const payerInfo = {
+      name: userProfile.name + ' ' + userProfile.lastname,
+      email: userProfile.email,
+    };
+    setIsLoading(true);
+    const { data, error } = await getPlansForCredits(planData, payerInfo);
+    if (data) {
+      return router.push(data.init_point);
+    }
+    if (error) {
+      toast.error(error);
+      return setIsLoading(false);
+    }
+  }
   return (
-    <motion.div className="relative cursor-default w-[20rem] h-[15rem] border border-orange-300 rounded-xl flex flex-col items-center hover:scale-105 transition-all ">
+    <motion.div className="relative cursor-default w-[17rem] h-[15rem] border border-orange-300 rounded-xl flex flex-col items-center hover:scale-105 transition-all ">
       <img
         src={image}
         alt={name}
         className="w-full h-[100%] object-cover rounded-xl"
       />
-      <div className="group absolute  flex items-center flex-col justify-center bg-gray-900 bg-opacity-70 w-full h-full text-center p-4">
+      <div className="group absolute  flex items-center flex-col justify-center bg-gray-900 bg-opacity-70 w-full h-full text-center">
         <h1 className="text-white font-bold text-3xl group-hover:scale-105 transition-all">
           {name.split(' ')[0]}{' '}
           <span className="text-[#fa8c48]">{name.split(' ')[1]}</span>
@@ -54,30 +73,8 @@ export default function PlanCard({
           ) : (
             <Button
               isDisabled={isLoading}
-              onPress={async () => {
-                const planData = {
-                  name,
-                  image,
-                  price,
-                  description,
-                  plan,
-                };
-                const payerInfo = {
-                  name: userProfile.name + ' ' + userProfile.lastname,
-                  email: userProfile.email,
-                };
-                setIsLoading(true);
-                const { data, error } = await getPlansForCredits(
-                  planData,
-                  payerInfo
-                );
-                if (data) {
-                  router.push(data.init_point);
-                }
-                if (error) {
-                  toast.error(error);
-                }
-                setIsLoading(false);
+              onPress={() => {
+                rechargeCredits();
               }}
               className=" mt-2 bg-[#fa8c48] font-semibold border-1 border-white text-white hover:scale-110 active:scale-105"
             >

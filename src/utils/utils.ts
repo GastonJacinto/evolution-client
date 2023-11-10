@@ -2,9 +2,7 @@ import { getAllClasses } from '@/app/api/actions/getClasses';
 import { getInstructors } from '@/app/api/actions/getInstructorsAndUsers';
 import { getUserProfile } from '@/app/api/actions/getUserProfile';
 import { passClassToInactive } from '@/app/api/actions/passClassToInactive';
-import { CreatePaymentType, GymClassType } from './types';
-import { Plan } from '@/components/planCard/planCard';
-import { info } from 'console';
+import { CreatePaymentType, GymClassType, PlanType } from './types';
 
 export const getErrorMessage = (error: unknown): string => {
   let message: string;
@@ -70,7 +68,7 @@ type PayerDataType = {
   name: string;
 };
 export async function getPlansForCredits(
-  planData: Plan,
+  planData: PlanType,
   payerData: PayerDataType
 ) {
   let data;
@@ -78,7 +76,7 @@ export async function getPlansForCredits(
     description: planData.description,
     title: planData.name,
     quantity: 1,
-    unit_price: parseInt(planData.price),
+    unit_price: planData.price,
     image: planData.image,
     currency_id: 'ARS',
     payer: {

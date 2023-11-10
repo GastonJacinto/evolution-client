@@ -15,6 +15,8 @@ import {
 import { useSession } from 'next-auth/react';
 import RechargeCredits from '@/components/rechargeCredits/rechargeCredits';
 import { useRouter } from 'next/navigation';
+import { getAllPlans } from '../api/actions/getPlans';
+import { loadAllPlans } from '../redux/features/allPlansSlice';
 
 export default function Profile() {
   //!----------- HOOKS -----------------
@@ -25,10 +27,20 @@ export default function Profile() {
   const dispatch = useAppDispatch();
   React.useEffect(() => {
     dispatchToChargeUserProfile();
+    dispatchToChargePlans();
     getClassesToTable();
     deletingClassesToInactive(classes);
   }, []);
   //!----------- FUNCTIONS -----------------
+  async function dispatchToChargePlans() {
+    const { plans, error } = await getAllPlans();
+    if (error) {
+      return toast.error(error);
+    }
+    if (plans) {
+      return dispatch(loadAllPlans(plans));
+    }
+  }
   async function getClassesToTable() {
     const { classes, error } = await getAllClassesFunction();
     if (error) {
@@ -40,7 +52,7 @@ export default function Profile() {
   }
   async function dispatchToChargeUserProfile() {
     if (session) {
-      const { user, error } = await getUser(session.user?.token);
+      const { user, error } = await getUser(session?.user.token);
       if (user) {
         return dispatch(loadProfile(user));
       } else {

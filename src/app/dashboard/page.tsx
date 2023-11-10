@@ -35,6 +35,8 @@ import { itemsDashboardsClasse } from '@/data/data';
 import AllUsersDashboard from '@/components/dashboardComponents/allUsers/allUsersDashboard';
 import AllPlansDashboard from '@/components/dashboardComponents/allPlans/allPlans';
 import EditPlanDashboard from '@/components/dashboardComponents/allPlans/editPlan';
+import { getAllPlans } from '../api/actions/getPlans';
+import { loadAllPlans } from '../redux/features/allPlansSlice';
 export default function Dashboard() {
   //!---------------------- H O O K S --------------------------
   const [tab, setTab] = React.useState('');
@@ -45,6 +47,7 @@ export default function Dashboard() {
     getAllInstructors();
     getAllUsers();
     getClassesToTable();
+    dispatchToChargePlans();
     deletingClassesToInactive(classes);
   });
 
@@ -103,6 +106,15 @@ export default function Dashboard() {
     }
     return dispatch(loadAllClasses(classes));
   }
+  async function dispatchToChargePlans() {
+    const { plans, error } = await getAllPlans();
+    if (error) {
+      return toast.error(error);
+    }
+    if (plans) {
+      return dispatch(loadAllPlans(plans));
+    }
+  }
   return (
     <div className="w-full pt-16 flex flex-col items-center text-black font-bold">
       <div className=" justify-center p-3 gap-2 items-center mb-5 flex flex-wrap">
@@ -149,11 +161,12 @@ export default function Dashboard() {
             })}
           </DropdownMenu>
         </Dropdown>
+
         {
-          //! ---------- DROPDOWN MENU PARA USUARIOS E INSTRUCTORES-----------}
+          //! ---------- DROPDOWN MENU PARA PLANES ----------}
         }
         <Dropdown
-          aria-label="dropdown-users-instructors"
+          aria-label="dropdown-planes"
           className="border-1 border-zinc-900"
         >
           <DropdownTrigger>
@@ -161,11 +174,11 @@ export default function Dashboard() {
               startContent={<IoMdArrowDropdownCircle />}
               className="bg-[#f59b4b]"
             >
-              Usuarios/Instructores
+              Planes
             </Button>
           </DropdownTrigger>
           <DropdownMenu aria-label="dropdown-menu">
-            {itemsDashboardsUsers.map((item, i) => {
+            {itemsDashboardsPlans.map((item, i) => {
               return (
                 <DropdownItem
                   textValue={item.name}
@@ -193,10 +206,10 @@ export default function Dashboard() {
           </DropdownMenu>
         </Dropdown>
         {
-          //! ---------- DROPDOWN MENU PARA PLANES ----------}
+          //! ---------- DROPDOWN MENU PARA USUARIOS E INSTRUCTORES-----------}
         }
         <Dropdown
-          aria-label="dropdown-planes"
+          aria-label="dropdown-users-instructors"
           className="border-1 border-zinc-900"
         >
           <DropdownTrigger>
@@ -204,11 +217,11 @@ export default function Dashboard() {
               startContent={<IoMdArrowDropdownCircle />}
               className="bg-[#f59b4b]"
             >
-              Planes
+              Usuarios/Instructores
             </Button>
           </DropdownTrigger>
           <DropdownMenu aria-label="dropdown-menu">
-            {itemsDashboardsPlans.map((item, i) => {
+            {itemsDashboardsUsers.map((item, i) => {
               return (
                 <DropdownItem
                   textValue={item.name}

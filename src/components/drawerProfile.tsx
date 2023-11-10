@@ -34,6 +34,7 @@ const DrawerProfile = () => {
     router.push('/auth/login');
     setLoggingOut(false);
   };
+  const userGender = userProfile.genre === 'masc' ? 'Bienvenido' : 'Bienvenida';
   return (
     <div
       className={`z-10 mt-[5rem] h-full fixed flex flex-col transition-all  ${
@@ -67,15 +68,15 @@ const DrawerProfile = () => {
             className="w-20 h-20 rounded-full "
           />
           <p className="font-semibold text-white capitalize">
-            {userProfile.name} {userProfile.lastname}
+            {userGender}, {userProfile.name} {userProfile.lastname}
           </p>
         </div>
         <div className="mt-10 w-full flex flex-col cursor-default">
           <div className="group mx-1 p-2 text-center border-1 rounded-md bg-zinc-700 transition-all">
             <p className="flex items-center gap-2">
-              <FaCoins className="text-3xl" /> Créditos restantes:{' '}
+              <FaCoins className="text-2xl" /> Créditos restantes:{' '}
               <span className="group-hover:scale-125 transition-all ">
-                {userProfile.remaining_classes}
+                {userProfile.remaining_classes || 0}
               </span>
             </p>
           </div>
