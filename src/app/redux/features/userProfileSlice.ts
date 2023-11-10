@@ -22,6 +22,7 @@ const initialState: MyProfileState = {
     name: '',
     phone: '',
     role: '',
+    remaining_classes: 0,
   },
 };
 

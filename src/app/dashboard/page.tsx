@@ -1,7 +1,19 @@
 'use client';
 import React from 'react';
-import { dashboardButtons } from '@/data/data';
-import { Button } from '@nextui-org/react';
+import {
+  dashboardButtons,
+  itemsDashboardsPlans,
+  itemsDashboardsUsers,
+} from '@/data/data';
+
+import { IoMdArrowDropdownCircle } from 'react-icons/io';
+import {
+  Button,
+  Dropdown,
+  DropdownItem,
+  DropdownMenu,
+  DropdownTrigger,
+} from '@nextui-org/react';
 import AllClassesDashboard from '@/components/dashboardComponents/allClasses/allClassesDashboard';
 import CreateClass from '@/components/dashboardComponents/createClass/createClass';
 import { useAppDispatch, useAppSelector } from '@/utils/hooks';
@@ -19,9 +31,13 @@ import {
   getAllInstructorsFunction,
 } from '@/utils/utils';
 import { GymClassType } from '@/utils/types';
+import { itemsDashboardsClasse } from '@/data/data';
+import AllUsersDashboard from '@/components/dashboardComponents/allUsers/allUsersDashboard';
+import AllPlansDashboard from '@/components/dashboardComponents/allPlans/allPlans';
+import EditPlanDashboard from '@/components/dashboardComponents/allPlans/editPlan';
 export default function Dashboard() {
   //!---------------------- H O O K S --------------------------
-  const [tab, setTab] = React.useState(0);
+  const [tab, setTab] = React.useState('');
   const dispatch = useAppDispatch();
   const classes = useAppSelector((state) => state.gymClassesSlice.allClasses);
 
@@ -32,14 +48,27 @@ export default function Dashboard() {
     deletingClassesToInactive(classes);
   });
 
-  const displayInfo = (key: number) => {
-    switch (key) {
-      case 0:
+  const displayInfo = (id: string) => {
+    //* Son arrays de objetos, cada posición tiene, entre otras, una propiedad "id",
+    //* que se utilziará para determinár cual componente renderizar de acuerdo al "id"
+    //* y al estado local "tab".
+    switch (id) {
+      case itemsDashboardsClasse[0].id:
         return <AllClassesDashboard />;
-      case 1:
+      case itemsDashboardsClasse[1].id:
         return <CreateClass />;
-      case 2:
+      case itemsDashboardsUsers[0].id:
+        return <AllUsersDashboard />;
+      case itemsDashboardsUsers[1].id:
         return <AllInstructorsDashboard />;
+      case itemsDashboardsUsers[2].id:
+        return <p>Agregar instructores</p>;
+      case itemsDashboardsPlans[0].id:
+        return <AllPlansDashboard />;
+      case itemsDashboardsPlans[1].id:
+        return <EditPlanDashboard />;
+      default:
+        return <AllClassesDashboard />;
     }
   };
   //!---------------------- F U N C T I O N S --------------------------
@@ -77,23 +106,135 @@ export default function Dashboard() {
   return (
     <div className="w-full pt-16 flex flex-col items-center text-black font-bold">
       <div className=" justify-center p-3 gap-2 items-center mb-5 flex flex-wrap">
-        {dashboardButtons.map((but, i) => {
-          return (
+        {
+          //! ---------- DROPDOWN MENU PARA CLASES-----------}
+        }
+        <Dropdown
+          aria-label="dropdown-clases"
+          className="border-1 border-zinc-900"
+        >
+          <DropdownTrigger>
             <Button
-              key={i}
-              className={` ${
-                i === tab
-                  ? 'bg-[#f59b4b]  shadow-md shadow-[#f59a4b42]'
-                  : 'bg-gray-200'
-              } transition-all`}
-              onPress={() => {
-                setTab(i);
-              }}
+              startContent={<IoMdArrowDropdownCircle />}
+              className="bg-[#f59b4b]"
             >
-              {but.name}
+              Clases
             </Button>
-          );
-        })}
+          </DropdownTrigger>
+          <DropdownMenu aria-label="dropdown-menu">
+            {itemsDashboardsClasse.map((item, i) => {
+              return (
+                <DropdownItem
+                  textValue={item.name}
+                  className={`border-1 border-black  ${
+                    item.id === tab
+                      ? 'bg-[#f59b4b]  shadow-md shadow-[#f59a4b42]'
+                      : 'bg-gray-200'
+                  } transition-all`}
+                  onClick={() => {
+                    setTab(item.id);
+                  }}
+                  key={i}
+                  description={item.description}
+                  startContent={React.cloneElement(
+                    item.icon as React.ReactElement,
+                    {
+                      className: 'text-3xl',
+                    }
+                  )}
+                >
+                  <span className="font-semibold">{item.name}</span>
+                </DropdownItem>
+              );
+            })}
+          </DropdownMenu>
+        </Dropdown>
+        {
+          //! ---------- DROPDOWN MENU PARA USUARIOS E INSTRUCTORES-----------}
+        }
+        <Dropdown
+          aria-label="dropdown-users-instructors"
+          className="border-1 border-zinc-900"
+        >
+          <DropdownTrigger>
+            <Button
+              startContent={<IoMdArrowDropdownCircle />}
+              className="bg-[#f59b4b]"
+            >
+              Usuarios/Instructores
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu aria-label="dropdown-menu">
+            {itemsDashboardsUsers.map((item, i) => {
+              return (
+                <DropdownItem
+                  textValue={item.name}
+                  className={`border-1 border-black  ${
+                    item.id === tab
+                      ? 'bg-[#f59b4b]  shadow-md shadow-[#f59a4b42]'
+                      : 'bg-gray-200'
+                  } transition-all`}
+                  onClick={() => {
+                    setTab(item.id);
+                  }}
+                  key={i}
+                  description={item.description}
+                  startContent={React.cloneElement(
+                    item.icon as React.ReactElement,
+                    {
+                      className: 'text-3xl',
+                    }
+                  )}
+                >
+                  <span className="font-semibold">{item.name}</span>
+                </DropdownItem>
+              );
+            })}
+          </DropdownMenu>
+        </Dropdown>
+        {
+          //! ---------- DROPDOWN MENU PARA PLANES ----------}
+        }
+        <Dropdown
+          aria-label="dropdown-planes"
+          className="border-1 border-zinc-900"
+        >
+          <DropdownTrigger>
+            <Button
+              startContent={<IoMdArrowDropdownCircle />}
+              className="bg-[#f59b4b]"
+            >
+              Planes
+            </Button>
+          </DropdownTrigger>
+          <DropdownMenu aria-label="dropdown-menu">
+            {itemsDashboardsPlans.map((item, i) => {
+              return (
+                <DropdownItem
+                  textValue={item.name}
+                  className={`border-1 border-black  ${
+                    item.id === tab
+                      ? 'bg-[#f59b4b]  shadow-md shadow-[#f59a4b42]'
+                      : 'bg-gray-200'
+                  } transition-all`}
+                  onClick={() => {
+                    setTab(item.id);
+                  }}
+                  key={i}
+                  description={item.description}
+                  startContent={React.cloneElement(
+                    item.icon as React.ReactElement,
+                    {
+                      className: 'text-3xl',
+                    }
+                  )}
+                >
+                  <span className="font-semibold">{item.name}</span>
+                </DropdownItem>
+              );
+            })}
+          </DropdownMenu>
+        </Dropdown>
       </div>
       {displayInfo(tab)}
     </div>

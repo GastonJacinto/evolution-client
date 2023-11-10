@@ -19,7 +19,9 @@ import { usePathname } from 'next/navigation';
 import { useSession } from 'next-auth/react';
 import { BiUser } from 'react-icons/bi';
 import { useAppSelector } from '@/utils/hooks';
+import { useRouter } from 'next/navigation';
 export default function NavBar() {
+  const router = useRouter();
   const { data: session } = useSession();
   const userProfile = useAppSelector((state) => state.myProfileSlice.myProfile);
   const pathname = usePathname();
@@ -108,17 +110,23 @@ export default function NavBar() {
         </Button>
       ) : ( */}
       <Button
+        onPress={() => {
+          router.push('/profile');
+        }}
         startContent={<BiUser className="registerIcons" />}
         className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
       >
-        <Link href={'/profile'}>Mi perfil</Link>
+        Mi perfil
       </Button>
       {/* )} */}
       <Button
+        onPress={() => {
+          router.push('/dashboard');
+        }}
         startContent={<BiUser className="registerIcons" />}
         className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
       >
-        <Link href={'/dashboard'}>Dash</Link>
+        Dash
       </Button>
       {
         //! ----------------- ESTO SE BORRA DESPUES -----------------

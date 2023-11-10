@@ -7,9 +7,6 @@ const nextConfig = {
   images: {
     domains: ['res.cloudinary.com', 'www.cimformacion.com'],
   },
-  pages: {
-    signOut: '/', // Redirige a esta página después del cierre de sesión
-  },
 };
 
 module.exports = nextConfig;

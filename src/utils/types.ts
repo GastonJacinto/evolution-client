@@ -51,6 +51,19 @@ export type GymClassType = {
   students: UserType[];
 };
 
+export type CreatePaymentType = {
+  description: string;
+  title: string;
+  quantity: number;
+  unit_price: number;
+  image: string;
+  currency_id: string;
+  payer: {
+    name: string;
+    email: string;
+  };
+};
+
 //! ---------------- STATES TYPES ---------------
 
 //! ----------------- ENUMS ----------------
@@ -62,4 +75,10 @@ export enum RoleEnum {
 export enum EnableOrDisableEnum {
   ENABLE = 'enable',
   DISABLE = 'disable',
+}
+
+export enum PlanEnum {
+  initial = 'initial',
+  inter = 'inter',
+  advanced = 'advanced',
 }

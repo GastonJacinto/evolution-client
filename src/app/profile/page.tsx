@@ -13,10 +13,13 @@ import {
   getUser,
 } from '@/utils/utils';
 import { useSession } from 'next-auth/react';
+import RechargeCredits from '@/components/rechargeCredits/rechargeCredits';
+import { useRouter } from 'next/navigation';
 
 export default function Profile() {
   //!----------- HOOKS -----------------
   const { data: session } = useSession();
+  const router = useRouter();
   const tab = useAppSelector((state) => state.drawerSelectorSlice.tab);
   const classes = useAppSelector((state) => state.gymClassesSlice.allClasses);
   const dispatch = useAppDispatch();
@@ -24,7 +27,7 @@ export default function Profile() {
     dispatchToChargeUserProfile();
     getClassesToTable();
     deletingClassesToInactive(classes);
-  });
+  }, []);
   //!----------- FUNCTIONS -----------------
   async function getClassesToTable() {
     const { classes, error } = await getAllClassesFunction();
@@ -52,7 +55,7 @@ export default function Profile() {
       case 2:
         return <AllClasses />;
       case 3:
-        return <AllClasses />;
+        return <RechargeCredits />;
       default:
         return <MyClasses />;
     }

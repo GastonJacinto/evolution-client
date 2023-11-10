@@ -2,14 +2,13 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import { Divider } from '@nextui-org/react';
-import AllInstructorsDashboardTable from './allInstructorsDashboardTable';
-import AllInstructorsDashboardPopover from '@/components/modals/popovers/allInstructorsDashboardPopover';
+import AllUsersDashboardTable from './allUsersDashboardTable';
 
-function AllInstructorsDashboard() {
+function AllUsersDashboard() {
   return (
     <motion.div
       initial={{
-        x: 100,
+        x: -100,
         opacity: 0,
       }}
       animate={{
@@ -19,14 +18,13 @@ function AllInstructorsDashboard() {
       className="w-full h-full flex flex-col items-center  overflow-hidden"
     >
       <h3 className="classesH3">
-        Instructores <span className="text-[#f59b4b]">registrados</span>
-        <AllInstructorsDashboardPopover />
+        Usuarios <span className="text-[#f59b4b]">registrados</span>
       </h3>
 
       <Divider aria-label="divider" className="classesDivider" />
-      <AllInstructorsDashboardTable />
+      <AllUsersDashboardTable />
     </motion.div>
   );
 }
 
-export default AllInstructorsDashboard;
+export default AllUsersDashboard;

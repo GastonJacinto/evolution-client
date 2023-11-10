@@ -1,23 +1,22 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Input } from '@nextui-org/react';
+import { Button, Input } from '@nextui-org/react';
 import { ShowedPass } from '@/components/buttons/ShowedPass';
 import { UnshowedPass } from '@/components/buttons/UnshowedPass';
 import toast from 'react-hot-toast';
-import LoginButton from '@/components/buttons/loginButton';
 import { signIn, useSession } from 'next-auth/react';
 import { setTimeout } from 'timers';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
+import { IoFingerPrint } from 'react-icons/io5';
 export default function Login() {
   //!---------------- HOOKS ---------------------
   const [isVisible, setIsVisible] = React.useState(false);
+  const [pending, setPending] = React.useState(false);
   const toggleVisibility = () => setIsVisible(!isVisible);
-  const [email, setEmail] = React.useState('admin@test.com');
-  const [password, setPassword] = React.useState('12345678');
-  const [blockLogin, setBlockLogin] = React.useState(false);
-  const { data: session, status } = useSession();
+  const [email, setEmail] = React.useState('');
+  const [password, setPassword] = React.useState('');
   const router = useRouter();
   //!---------------- FUNCTIONS ---------------------
   const handleSubmit = async () => {
@@ -31,19 +30,20 @@ export default function Login() {
       toast.error(responseNextAuth.error, {
         position: 'bottom-center',
       });
+      setPending(false);
       return;
     }
-    setBlockLogin(true);
     toast.success('Iniciando sesión...', {
       position: 'bottom-center',
     });
     setTimeout(() => {
       router.push('/profile');
+      setPending(false);
     }, 2000);
   };
 
   return (
-    <div className="pt-20 h-[100vh] w-full flex items-center justify-center text-center">
+    <div className="pt-[10rem] h-full w-full flex items-center justify-center text-center">
       <motion.div
         initial={{
           y: -100,
@@ -53,28 +53,19 @@ export default function Login() {
           y: 0,
           opacity: 1,
         }}
-        className="relative w-[min(100%,30rem)] m-3 h-[30rem] flex flex-col  items-center gap-4 rounded-xl bg-zinc-800"
+        className="relative w-[min(100%,30rem)] m-3 h-[25rem] flex flex-col  items-center gap-4 rounded-xl bg-zinc-800"
       >
-        {blockLogin ? (
-          <motion.div
-            initial={{
-              opacity: 0,
-            }}
-            animate={{
-              opacity: 1,
-            }}
-            className="absolute z-[50] bg-zinc-600 backdrop-blur-sm rounded-xl bg-opacity-60 w-full h-full"
-          ></motion.div>
-        ) : null}
-        <h1 className="text-white text-2xl">
+        <h1 className="text-white text-2xl p-2">
           Inicia sesión en{' '}
           <span className="text-[#f59b4b] font-bold">OLIMPO</span>
         </h1>
 
         <form
-          // onSubmit={handleSubmit}
-          action={handleSubmit}
-          className="w-[90%] p-5 h-full flex flex-col justify-between text-white items-center"
+          action={() => {
+            setPending(true);
+            handleSubmit();
+          }}
+          className="w-[90%] px-5 h-full flex flex-col justify-between text-white items-center"
         >
           <Input
             type="email"
@@ -109,19 +100,29 @@ export default function Login() {
           />
           <p>
             {' '}
-            <span className="text-[#f59b4b]">Olvidé</span> mi contraseña
+            <span className="text-[#f59b4b] hover:underline">Olvidé</span> mi
+            contraseña
           </p>
           <Link href={'/auth/register'}>
-            <p>
+            <p className="hover:underline">
               No tengo una cuenta en{' '}
               <span className="text-[#f59b4b] font-bold">OLIMPO</span>
             </p>
           </Link>
-          <LoginButton />
-          <div className="">
-            <span>Iniciar sesión con</span>
-            <p>Google Facebook</p>
-          </div>
+          <Button
+            type="submit"
+            isDisabled={pending}
+            className="group bg-[#f59b4b] text-black font-semibold  flex items-center mb-5 w-[100%]  rounded-xl gap-2 justify-center hover:scale-110 active:scale-105 transition-all"
+          >
+            {pending ? (
+              <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-black "></div>
+            ) : (
+              <>
+                <IoFingerPrint className="group-hover:scale-125 transition-all " />
+                Iniciar sesión
+              </>
+            )}
+          </Button>
         </form>
       </motion.div>
     </div>

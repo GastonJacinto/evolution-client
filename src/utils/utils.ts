@@ -2,7 +2,9 @@ import { getAllClasses } from '@/app/api/actions/getClasses';
 import { getInstructors } from '@/app/api/actions/getInstructorsAndUsers';
 import { getUserProfile } from '@/app/api/actions/getUserProfile';
 import { passClassToInactive } from '@/app/api/actions/passClassToInactive';
-import { GymClassType } from './types';
+import { CreatePaymentType, GymClassType } from './types';
+import { Plan } from '@/components/planCard/planCard';
+import { info } from 'console';
 
 export const getErrorMessage = (error: unknown): string => {
   let message: string;
@@ -60,5 +62,70 @@ export async function getAllInstructorsFunction() {
     return { instructors };
   } else {
     return { error };
+  }
+}
+
+type PayerDataType = {
+  email: string;
+  name: string;
+};
+export async function getPlansForCredits(
+  planData: Plan,
+  payerData: PayerDataType
+) {
+  let data;
+  const createPayment: CreatePaymentType = {
+    description: planData.description,
+    title: planData.name,
+    quantity: 1,
+    unit_price: parseInt(planData.price),
+    image: planData.image,
+    currency_id: 'ARS',
+    payer: {
+      name: payerData.name,
+      email: payerData.email,
+    },
+  };
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/payments/createPreference`,
+      {
+        method: 'POST',
+        body: JSON.stringify(createPayment),
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+    data = await res.json();
+    return { data };
+  } catch (error) {
+    return {
+      error: getErrorMessage(error),
+    };
+  }
+}
+export type InfoToAddCreditsType = {
+  name: string;
+  creditsToAdd: number;
+  userId: string;
+};
+
+export async function addCreditsFromDashboard(
+  infoToAddCredits: InfoToAddCreditsType
+) {
+  let data;
+  try {
+    const res = await fetch(
+      `${process.env.NEXT_PUBLIC_BACKEND_URL}/users/addRemainingClasses/${infoToAddCredits.creditsToAdd}/to/${infoToAddCredits.userId}`,
+      {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+      }
+    );
+    data = await res.json();
+    return { data };
+  } catch (error) {
+    return {
+      error: getErrorMessage(error),
+    };
   }
 }

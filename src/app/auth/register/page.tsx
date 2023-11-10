@@ -1,7 +1,7 @@
 'use client';
 import React from 'react';
 import { motion } from 'framer-motion';
-import { Divider, Input, Select, SelectItem } from '@nextui-org/react';
+import { Button, Divider, Input, Select, SelectItem } from '@nextui-org/react';
 import { ShowedPass } from '@/components/buttons/ShowedPass';
 import { UnshowedPass } from '@/components/buttons/UnshowedPass';
 import {
@@ -16,13 +16,14 @@ import { BsTelephone, BsGenderAmbiguous } from 'react-icons/bs';
 import { GiTeacher, GiGymBag } from 'react-icons/gi';
 import toast from 'react-hot-toast';
 import { useRouter } from 'next/navigation';
-import RegisterButton from '@/components/buttons/registerButton';
 import { FormDataType, RoleEnum } from '@/utils/types';
 import { registerUser } from '../../api/actions/register';
 import InfoPopover from '@/components/modals/popovers/registerPopover';
+import { CgGym } from 'react-icons/cg';
 
 export default function RegisterPage() {
   //!---------------------- STATES / HOOKS --------------------------
+  const [pending, setPending] = React.useState(false);
   const [isVisible, setIsVisible] = React.useState(false);
   const [formData, setFormData] = React.useState<FormDataType>({
     name: '',
@@ -52,27 +53,30 @@ export default function RegisterPage() {
     });
   };
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-    setBlockRegister(true);
+    setPending(true);
     event.preventDefault();
     const { data, error } = await registerUser(formData, role);
     if (error) {
       toast.error(error, {
         position: 'bottom-center',
       });
+      setPending(false);
+
       setBlockRegister(false);
       return;
     }
     if (role === RoleEnum.USER) {
-      toast.success('Registrado con éxito.', {
+      toast.success('Registrado con éxito. Redireccionando.', {
         position: 'bottom-center',
       });
 
       setTimeout(() => {
         router.push('/auth/login');
+        setPending(false);
         setBlockRegister(false);
       }, 2000);
     } else {
-      setBlockRegister(false);
+      setPending(false);
       toast.success(
         'Tu cuenta se encuentra pendiente de activación, puedes acercarte al establecimiento, o bien, esperar que un administrador se comunique contigo para activar tu cuenta.',
         {
@@ -94,7 +98,7 @@ export default function RegisterPage() {
           y: 0,
           opacity: 1,
         }}
-        className="relative w-[min(100%,30rem)] m-3 h-[39rem] flex flex-col items-center rounded-xl bg-zinc-800"
+        className="relative w-[min(100%,30rem)] m-3 h-[35rem] flex flex-col items-center rounded-xl bg-zinc-800"
       >
         {blockRegister ? (
           <motion.div
@@ -283,11 +287,20 @@ export default function RegisterPage() {
             }
             className=" text-black "
           />
-          <RegisterButton />
-          <div className="">
-            <span>O registrarse con</span>
-            <p>Google Facebook</p>
-          </div>
+          <Button
+            type="submit"
+            isDisabled={pending}
+            className="group bg-[#f59b4b] text-black font-semibold  flex items-center p-2 w-[100%]  rounded-xl gap-2 justify-center hover:scale-110 active:scale-105 transition-all mt-5"
+          >
+            {pending ? (
+              <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-black "></div>
+            ) : (
+              <>
+                <CgGym className="group-hover:scale-125 group-hover:rotate-[34deg] transition-all text-2xl" />
+                Crear mi cuenta
+              </>
+            )}
+          </Button>
         </form>
       </motion.div>
     </div>

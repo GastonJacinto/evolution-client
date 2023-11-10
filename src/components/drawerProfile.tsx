@@ -8,13 +8,15 @@ import { drawerOptions } from '@/data/data';
 import { RiLogoutCircleLine } from 'react-icons/ri';
 import { useAppDispatch, useAppSelector } from '@/utils/hooks';
 import { changeTab } from '@/app/redux/features/drawerSelectorSlice';
-import { useSession, signOut } from 'next-auth/react';
+import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { MdClass } from 'react-icons/md';
-import { GiToken } from 'react-icons/gi';
+import { useSession } from 'next-auth/react';
+import { FaCoins } from 'react-icons/fa6';
 
 const DrawerProfile = () => {
   //!---------------------- H O O K S -------------------
+  const [loggingOut, setLoggingOut] = React.useState(false);
+  const { data: session } = useSession();
   const [open, setOpen] = React.useState(false);
   const toggleOpen = () => {
     setOpen(!open);
@@ -24,11 +26,13 @@ const DrawerProfile = () => {
   const dispatch = useAppDispatch();
   //!---------------------- F U N C T I O N S -------------------
   const handleSignOut = async () => {
+    setLoggingOut(true);
     await signOut({
-      redirect: false, // Evita la redirección automática después del cierre de sesión
-      callbackUrl: '/auth/login', // Ruta a la que quieres redirigir al usuario después de cerrar sesión
+      redirect: false,
+      callbackUrl: '/auth/login',
     });
     router.push('/auth/login');
+    setLoggingOut(false);
   };
   return (
     <div
@@ -38,16 +42,20 @@ const DrawerProfile = () => {
           : 'bg-zinc-600 w-[15rem]  bg-opacity-90 '
       }`}
     >
-      <button
-        onClick={toggleOpen}
-        className="absolute z-20 top-1 right-0 w-[2rem] h-[2rem]flex items-center justify-center transition-all"
-      >
-        {open ? (
-          <BiArrowToLeft className="w-[2rem] h-[2rem] transition-all text-white" />
-        ) : (
-          <BiArrowToLeft className="w-[2rem] h-[2rem] -rotate-180 transition-all bg-gray-500 bg-opacity-30 rounded-full text-white" />
-        )}
-      </button>
+      {userProfile.email ? (
+        <button
+          onClick={toggleOpen}
+          className="absolute z-20 top-1 right-0 w-[2rem] h-[2rem] flex items-center justify-center transition-all"
+        >
+          {open ? (
+            <BiArrowToLeft className="w-[2rem] h-[2rem] duration-400 text-white hover:-translate-x-1" />
+          ) : (
+            <BiArrowToLeft className="w-[2rem] h-[2rem] -rotate-180 duration-400 bg-gray-500 bg-opacity-30 rounded-full text-white hover:translate-x-1" />
+          )}
+        </button>
+      ) : (
+        <div className="absolute z-20 top-[.5rem] left-[.5rem] w-[1.5rem] h-[1.5rem] animate-spin border-b-2 border white rounded-full"></div>
+      )}
       <div
         className={`relative h-full p-2 flex flex-col items-center text-[#f3f0e5] ${
           open ? '' : 'hidden'
@@ -65,7 +73,7 @@ const DrawerProfile = () => {
         <div className="mt-10 w-full flex flex-col cursor-default">
           <div className="group mx-1 p-2 text-center border-1 rounded-md bg-zinc-700 transition-all">
             <p className="flex items-center gap-2">
-              <GiToken className="text-3xl" /> Créditos restantes:{' '}
+              <FaCoins className="text-3xl" /> Créditos restantes:{' '}
               <span className="group-hover:scale-125 transition-all ">
                 {userProfile.remaining_classes}
               </span>
@@ -99,8 +107,14 @@ const DrawerProfile = () => {
           }}
           className="fixed bottom-2 flex items-center w-[12rem] p-1 justify-center gap-2 border-gray-500 border-1 rounded-xl bg-zinc-950 bg-opacity-30 group hover:scale-105 transition-all cursor-pointer active:scale-100"
         >
-          <RiLogoutCircleLine className="w-[1rem] h-[1rem] group-hover:-translate-x-5 group-hover:scale-125 transition-all" />{' '}
-          Cerrar sesión
+          {!loggingOut ? (
+            <>
+              <RiLogoutCircleLine className="w-[1rem] h-[1rem] group-hover:-translate-x-5 group-hover:scale-125 transition-all" />{' '}
+              Cerrar sesión
+            </>
+          ) : (
+            <div className=" w-[1.5rem] h-[1.5rem] animate-spin border-b-2 border white rounded-full"></div>
+          )}
         </div>
       </div>
     </div>

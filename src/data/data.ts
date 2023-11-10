@@ -2,7 +2,12 @@ import React from 'react';
 import { CgProfile } from 'react-icons/cg';
 import { MdSportsGymnastics } from 'react-icons/md';
 import { BiMoneyWithdraw } from 'react-icons/bi';
-import { BsCalendarCheck } from 'react-icons/bs';
+import { BsCalendarCheck, BsPersonFillAdd, BsTable } from 'react-icons/bs';
+import { PlanEnum } from '@/utils/types';
+import { GrTable, GrTableAdd } from 'react-icons/gr';
+import { FaUsers, FaUsersGear } from 'react-icons/fa6';
+import { TbCardsFilled } from 'react-icons/tb';
+import { FaEdit } from 'react-icons/fa';
 export const navLinks = [
   {
     name: 'Precios',
@@ -29,32 +34,83 @@ export const dashboardButtons = [
   },
 ] as const;
 
+export const itemsDashboardsClasse = [
+  {
+    id: 'allClasses',
+    name: 'Clases',
+    description: 'Ver todas las clases.',
+    icon: React.createElement(GrTable),
+  },
+  {
+    id: 'createClass',
+    name: 'Crear clase',
+    description: 'Crear una nueva clase.',
+    icon: React.createElement(GrTableAdd),
+  },
+] as const;
+
+export const itemsDashboardsUsers = [
+  {
+    id: 'allUsers',
+    name: 'Usuarios',
+    description: 'Ver todas los usuarios registrados.',
+    icon: React.createElement(FaUsers),
+  },
+  {
+    id: 'allInstructors',
+    name: 'Instructores',
+    description: 'Ver todos los instructores registrados.',
+    icon: React.createElement(FaUsersGear),
+  },
+  {
+    id: 'createInstructor',
+    name: 'Agregar instructor',
+    description: 'Agregar un nuevo instructor.',
+    icon: React.createElement(BsPersonFillAdd),
+  },
+] as const;
+export const itemsDashboardsPlans = [
+  {
+    id: 'allPlans',
+    name: 'Planes',
+    description: 'Ver todos los planes actuales.',
+    icon: React.createElement(TbCardsFilled),
+  },
+  {
+    id: 'editPlan',
+    name: 'Editar planes',
+    description: 'Editar los planes actuales.',
+    icon: React.createElement(FaEdit),
+  },
+] as const;
 export const planes = [
   {
     name: 'Plan INICIAL',
     price: '3000',
-    description:
-      '3 clases por semana, ideal para personas que están comenzando a romper sus límites.',
+    description: 'Consta de 8 créditos, ideal para asistir 2 veces por semana.',
     image:
       'https://www.cimformacion.com/blog/wp-content/uploads/2020/09/estudiar-ser-entrenador-personal.jpg',
+    plan: PlanEnum.initial,
   },
   {
     name: 'Plan INTERMEDIO',
     price: '4000',
     description:
-      '4 clases por semana, ideal para aquellos que rompieron sus cadenas.',
+      'Consta de 12 créditos, ideal para asistir 3 veces por semana.',
     image:
       'https://www.europeanhealthschool.com/wp-content/uploads/2023/06/rutina-gimnasio-mujer.jpg',
+    plan: PlanEnum.inter,
   },
   {
     name: 'Plan AVANZADO',
     price: '5000',
     description:
-      'Puedes asistir los días que quieras, en el horario que quieras.',
+      'Consta de 16 créditos, ideal para asistir 4 veces por semana.',
     image:
       'https://media.revistagq.com/photos/5f7ddbde78c4dd5b8fdf24da/4:3/w_959,h_719,c_limit/gimnasios-discotecas-nueva-normalidad.jpg',
+    plan: PlanEnum.advanced,
   },
-] as const;
+];
 
 export const drawerOptions = [
   {
@@ -68,7 +124,7 @@ export const drawerOptions = [
     icon: React.createElement(BsCalendarCheck),
   },
   {
-    name: 'Estado de mi cuota',
+    name: 'Recargar créditos',
     tab: 3,
     icon: React.createElement(BiMoneyWithdraw),
   },

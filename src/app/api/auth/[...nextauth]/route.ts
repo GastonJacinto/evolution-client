@@ -13,28 +13,21 @@ const handler = NextAuth({
       },
       async authorize(credentials) {
         let data;
-        try {
-          const res = await fetch(
-            `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signIn`,
-            {
-              method: 'POST',
-              body: JSON.stringify({
-                email: credentials?.email,
-                password: credentials?.password,
-              }),
-              headers: { 'Content-Type': 'application/json' },
-            }
-          );
-          data = await res.json();
-          if (data.statusCode) {
-            throw new Error(getErrorMessage(data));
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_BACKEND_URL}/auth/signIn`,
+          {
+            method: 'POST',
+            body: JSON.stringify({
+              email: credentials?.email,
+              password: credentials?.password,
+            }),
+            headers: { 'Content-Type': 'application/json' },
           }
-        } catch (error) {
-          return {
-            error,
-          };
+        );
+        data = await res.json();
+        if (data.statusCode) {
+          throw new Error(getErrorMessage(data));
         }
-
         return data;
       },
     }),
