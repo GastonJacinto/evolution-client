@@ -15,6 +15,7 @@ export default function PlanCard({
   description,
   image,
   credits,
+  id,
 }: PlanType) {
   //! ------------------------- H O O K S ----------------------------
   const router = useRouter();
@@ -29,6 +30,7 @@ export default function PlanCard({
       price,
       description,
       credits,
+      id,
     };
     const payerInfo = {
       name: userProfile.name + ' ' + userProfile.lastname,
