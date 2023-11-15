@@ -229,7 +229,6 @@ export default function AllUsersDashboardTable() {
               <span>NOMBRE COMPLETO</span>
             </div>
           </TableColumn>
-
           <TableColumn>
             <div className="columnName ">
               <MdEmail className="text-xl" />
