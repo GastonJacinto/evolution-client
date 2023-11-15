@@ -112,12 +112,10 @@ export default function AllInstructorsDashboardTable() {
           {instructors?.map((instructor, i) => {
             return (
               <TableRow key={i}>
-                <TableCell key={1}>
+                <TableCell key={1} className="capitalize">
                   {instructor.name} {instructor.lastname}
                 </TableCell>
-                <TableCell key={2} className="capitalize">
-                  {instructor.email}
-                </TableCell>
+                <TableCell key={2}>{instructor.email}</TableCell>
 
                 <TableCell key={3} className="text-center">
                   {instructor.phone}

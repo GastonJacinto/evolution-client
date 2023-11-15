@@ -1,6 +1,5 @@
 import { FormDataType, RoleEnum } from '@/utils/types';
 import { getErrorMessage } from '@/utils/utils';
-import { user } from '@nextui-org/react';
 
 export const registerUser = async (
   userData: FormDataType,

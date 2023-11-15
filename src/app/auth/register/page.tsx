@@ -96,7 +96,7 @@ export default function RegisterPage() {
 
         <form
           onSubmit={handleSubmit}
-          className="w-[90%] p-2 h-full flex flex-col gap-2 text-white items-center"
+          className="w-[90%] p-2 h-full flex flex-col gap-2 text-white items-center bg-zinc-800 rounded-xl"
         >
           <p>
             Ingresa tus datos para{' '}

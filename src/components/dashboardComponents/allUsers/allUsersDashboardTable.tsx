@@ -16,6 +16,7 @@ import {
   ModalFooter,
   Select,
   SelectItem,
+  Pagination,
 } from '@nextui-org/react';
 import { useAppDispatch, useAppSelector } from '@/utils/hooks';
 import { ActiveAccount } from '@/utils/types';
@@ -33,7 +34,6 @@ import {
   AiOutlineCloseCircle,
 } from 'react-icons/ai';
 import { GrSecure, GrInsecure } from 'react-icons/gr';
-import { enableOrDisableInstructor } from '@/app/api/actions/enableOrDisableInstructor';
 import { EnableOrDisableEnum } from '@/utils/types';
 import {
   InfoToAddCreditsType,
@@ -42,7 +42,6 @@ import {
 } from '@/utils/utils';
 import { loadInstructors } from '@/app/redux/features/instructorsAndUsersSlice';
 import { FaCoins } from 'react-icons/fa6';
-import { planes } from '@/data/data';
 import { BiSolidCoinStack } from 'react-icons/bi';
 
 export default function AllUsersDashboardTable() {
@@ -92,6 +91,17 @@ export default function AllUsersDashboardTable() {
     }
   }
   //! ------------------ C O N S T A N T S -----------------------------
+  const [page, setPage] = React.useState(1);
+  const rowsPerPage = 5;
+
+  const pages = Math.ceil(users.length / rowsPerPage);
+
+  const items = React.useMemo(() => {
+    const start = (page - 1) * rowsPerPage;
+    const end = start + rowsPerPage;
+
+    return users.slice(start, end);
+  }, [page, users]);
 
   return (
     <>
@@ -194,6 +204,20 @@ export default function AllUsersDashboardTable() {
         </Modal>
       }
       <Table
+        classNames={{ wrapper: 'min-h-[222px]' }}
+        bottomContent={
+          <div className="flex w-full justify-center">
+            <Pagination
+              isCompact
+              showControls
+              showShadow
+              color="warning"
+              page={page}
+              total={pages}
+              onChange={(page) => setPage(page)}
+            />
+          </div>
+        }
         isHeaderSticky
         className="w-[95%] max-w-[50rem] min-h-[25rem] h-[60vh]"
         aria-label="Example static collection table"
@@ -242,10 +266,11 @@ export default function AllUsersDashboardTable() {
           </TableColumn>
         </TableHeader>
         <TableBody
+          items={items}
           loadingContent={<Spinner />}
-          emptyContent={'No hay instructores/as registrados/as.'}
+          emptyContent={'No hay usuarios registrados.'}
         >
-          {users?.map((user, i) => {
+          {items?.map((user, i) => {
             return (
               <TableRow key={i}>
                 <TableCell key={1} className="capitalize">

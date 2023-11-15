@@ -32,6 +32,7 @@ import AllPlansDashboard from '@/components/dashboardComponents/allPlans/allPlan
 import EditPlanDashboard from '@/components/dashboardComponents/allPlans/editPlan';
 import { getAllPlans } from '../api/actions/getPlans';
 import { loadAllPlans } from '../redux/features/allPlansSlice';
+import AddInstructorDashboard from '@/components/dashboardComponents/allInstructors/addInstructor';
 export default function Dashboard() {
   //!---------------------- H O O K S ---------------------------------
   const [tab, setTab] = React.useState('');
@@ -60,7 +61,7 @@ export default function Dashboard() {
       case itemsDashboardsUsers[1].id:
         return <AllInstructorsDashboard />;
       case itemsDashboardsUsers[2].id:
-        return <p>Agregar instructores</p>;
+        return <AddInstructorDashboard />;
       case itemsDashboardsPlans[0].id:
         return <AllPlansDashboard />;
       case itemsDashboardsPlans[1].id:
