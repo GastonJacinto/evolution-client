@@ -1,10 +1,6 @@
 'use client';
 import React from 'react';
-import {
-  dashboardButtons,
-  itemsDashboardsPlans,
-  itemsDashboardsUsers,
-} from '@/data/data';
+import { itemsDashboardsPlans, itemsDashboardsUsers } from '@/data/data';
 
 import { IoMdArrowDropdownCircle } from 'react-icons/io';
 import {
@@ -30,7 +26,6 @@ import {
   getAllClassesFunction,
   getAllInstructorsFunction,
 } from '@/utils/utils';
-import { GymClassType } from '@/utils/types';
 import { itemsDashboardsClasse } from '@/data/data';
 import AllUsersDashboard from '@/components/dashboardComponents/allUsers/allUsersDashboard';
 import AllPlansDashboard from '@/components/dashboardComponents/allPlans/allPlans';
@@ -38,7 +33,7 @@ import EditPlanDashboard from '@/components/dashboardComponents/allPlans/editPla
 import { getAllPlans } from '../api/actions/getPlans';
 import { loadAllPlans } from '../redux/features/allPlansSlice';
 export default function Dashboard() {
-  //!---------------------- H O O K S --------------------------
+  //!---------------------- H O O K S ---------------------------------
   const [tab, setTab] = React.useState('');
   const dispatch = useAppDispatch();
   const classes = useAppSelector((state) => state.gymClassesSlice.allClasses);
@@ -50,7 +45,7 @@ export default function Dashboard() {
     dispatchToChargePlans();
     deletingClassesToInactive(classes);
   });
-
+  //!---------------------- F U N C T I O N S --------------------------
   const displayInfo = (id: string) => {
     //* Son arrays de objetos, cada posición tiene, entre otras, una propiedad "id",
     //* que se utilziará para determinár cual componente renderizar de acuerdo al "id"
@@ -74,8 +69,6 @@ export default function Dashboard() {
         return <AllClassesDashboard />;
     }
   };
-  //!---------------------- F U N C T I O N S --------------------------
-
   async function getAllUsers() {
     const { users, error } = await getUsers();
     if (users) {
@@ -115,6 +108,7 @@ export default function Dashboard() {
       return dispatch(loadAllPlans(plans));
     }
   }
+  //! ------------------------ V A R I A B L E S ------------------------------------
   return (
     <div className="w-full pt-16 flex flex-col items-center text-black font-bold">
       <div className=" justify-center p-3 gap-2 items-center mb-5 flex flex-wrap">

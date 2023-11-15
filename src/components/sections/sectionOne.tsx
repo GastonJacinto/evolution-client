@@ -15,7 +15,7 @@ export default function SectionOne() {
       }}
       className=" w-full h-[100vh]  "
     >
-      <div className="flex w-full h-[100%] relative items-center justify-center text-center ">
+      <div className="flex w-full h-[100%] relative items-center justify-center text-center mt-16">
         <img
           src={
             'https://res.cloudinary.com/db7wpgkge/image/upload/v1697307306/evolution-training/landing/kvebu0hpnmj8cm07k0ua.jpg'

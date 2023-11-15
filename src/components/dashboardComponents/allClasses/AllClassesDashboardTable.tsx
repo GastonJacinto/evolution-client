@@ -36,10 +36,8 @@ import {
   AiFillWarning,
 } from 'react-icons/ai';
 import { deleteClass } from '@/app/api/actions/deleteClass';
-import { getAllClasses } from '@/app/api/actions/getClasses';
 import { loadAllClasses } from '@/app/redux/features/gymClassesSlice';
 import { removeStudentFromClass } from '@/app/api/actions/removeStudentFromClass';
-import { info } from 'console';
 import { CgCalendar } from 'react-icons/cg';
 import { BiSolidUser } from 'react-icons/bi';
 import { getAllClassesFunction } from '@/utils/utils';

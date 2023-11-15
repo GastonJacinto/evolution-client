@@ -1,6 +1,7 @@
 import React, { useRef, useEffect } from 'react';
 import { motion, useInView } from 'framer-motion';
 import PlanCards from '../planCard/planCards';
+import { useAppSelector } from '@/utils/hooks';
 export default function SectionTwo() {
   const fadeInAnimationVariants = {
     initial: {

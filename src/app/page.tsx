@@ -5,7 +5,7 @@ import SectionTwo from '@/components/sections/sectionTwo';
 
 export default function Home() {
   return (
-    <main className="flex flex-col items-center">
+    <main className="flex w-full h-full flex-col items-center">
       <SectionOne />
       <SectionTwo />
     </main>

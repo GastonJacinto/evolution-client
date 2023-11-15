@@ -53,7 +53,7 @@ export default function PlanCard({
         alt={name}
         className="w-full h-[100%] object-cover rounded-xl"
       />
-      <div className="group absolute  flex items-center flex-col justify-center bg-gray-900 bg-opacity-70 w-full h-full text-center">
+      <div className="group absolute rounded-xl flex items-center flex-col justify-center bg-gray-900 bg-opacity-70 w-full h-full text-center">
         <h1 className="text-white font-bold text-3xl group-hover:scale-105 transition-all">
           {name.split(' ')[0]}{' '}
           <span className="text-[#fa8c48]">{name.split(' ')[1]}</span>

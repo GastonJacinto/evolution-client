@@ -20,6 +20,8 @@ import { useSession } from 'next-auth/react';
 import { BiUser } from 'react-icons/bi';
 import { useAppSelector } from '@/utils/hooks';
 import { useRouter } from 'next/navigation';
+import { IoMdLogIn } from 'react-icons/io';
+
 export default function NavBar() {
   const router = useRouter();
   const { data: session } = useSession();
@@ -109,24 +111,35 @@ export default function NavBar() {
           <Link href={'/auth/login'}>Iniciar sesión</Link>
         </Button>
       ) : ( */}
-      <Button
-        onPress={() => {
-          router.push('/profile');
-        }}
-        startContent={<BiUser className="registerIcons" />}
-        className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
-      >
-        Mi perfil
-      </Button>
+      {session ? (
+        <Button
+          onPress={() => {
+            router.push('/profile');
+          }}
+          startContent={<BiUser className="registerIcons" />}
+          className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
+        >
+          Mi perfil
+        </Button>
+      ) : pathname === '/auth/login' ? null : (
+        <Button
+          onPress={() => {
+            router.push('/auth/login');
+          }}
+          startContent={<IoMdLogIn className="registerIcons" />}
+          className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
+        >
+          Iniciar sesión
+        </Button>
+      )}
       {/* )} */}
       <Button
         onPress={() => {
           router.push('/dashboard');
         }}
-        startContent={<BiUser className="registerIcons" />}
         className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
       >
-        Dash
+        Dashboard
       </Button>
       {
         //! ----------------- ESTO SE BORRA DESPUES -----------------

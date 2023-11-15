@@ -25,7 +25,6 @@ export default function Login() {
     }
   });
   //!---------------- FUNCTIONS ---------------------
-  function isLoggedIn() {}
   const handleSubmit = async () => {
     const responseNextAuth = await signIn('credentials', {
       email,
