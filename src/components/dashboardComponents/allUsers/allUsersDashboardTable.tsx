@@ -4,6 +4,7 @@ import {
   TableHeader,
   TableColumn,
   TableBody,
+  Input,
   TableRow,
   TableCell,
   Button,
@@ -43,6 +44,7 @@ import {
 import { loadInstructors } from '@/app/redux/features/instructorsAndUsersSlice';
 import { FaCoins } from 'react-icons/fa6';
 import { BiSolidCoinStack } from 'react-icons/bi';
+import { IoSearchCircleOutline } from 'react-icons/io5';
 
 export default function AllUsersDashboardTable() {
   //! ------------------ H O O K S -----------------------------
@@ -58,6 +60,8 @@ export default function AllUsersDashboardTable() {
   const dispatch = useAppDispatch();
   const users = useAppSelector((state) => state.instructorAndUsersSlice.users);
   const plans = useAppSelector((state) => state.allPlansSlice.allPlans);
+  const [filterValue, setFilterValue] = React.useState('');
+  const hasSearchFilter = Boolean(filterValue);
 
   //! ------------------ F U N C T I O N S -----------------------------
   async function enableOrDisable(
@@ -94,15 +98,52 @@ export default function AllUsersDashboardTable() {
   const [page, setPage] = React.useState(1);
   const rowsPerPage = 5;
 
-  const pages = Math.ceil(users.length / rowsPerPage);
+  const onClear = React.useCallback(() => {
+    setFilterValue('');
+    setPage(1);
+  }, []);
+
+  const onSearchChange = React.useCallback((value: string) => {
+    if (value) {
+      setFilterValue(value);
+      setPage(1);
+    } else {
+      setFilterValue('');
+    }
+  }, []);
+  const filteredItems = React.useMemo(() => {
+    let filteredUsers = [...users];
+
+    if (hasSearchFilter) {
+      filteredUsers = filteredUsers.filter((user) =>
+        user.name.toLowerCase().includes(filterValue.toLowerCase())
+      );
+    }
+    return filteredUsers;
+  }, [users, filterValue, hasSearchFilter]);
+
+  const pages = Math.ceil(filteredItems.length / rowsPerPage);
 
   const items = React.useMemo(() => {
     const start = (page - 1) * rowsPerPage;
     const end = start + rowsPerPage;
 
-    return users.slice(start, end);
-  }, [page, users]);
+    return filteredItems.slice(start, end);
+  }, [page, filteredItems]);
 
+  const topContent = React.useMemo(() => {
+    return (
+      <Input
+        isClearable
+        className="w-full sm:max-w-[30%] "
+        placeholder="Buscar usuario"
+        startContent={<IoSearchCircleOutline className="registerIcons" />}
+        value={filterValue}
+        onClear={() => onClear()}
+        onValueChange={onSearchChange}
+      />
+    );
+  }, [filterValue, onSearchChange, onClear]);
   return (
     <>
       {
@@ -205,6 +246,7 @@ export default function AllUsersDashboardTable() {
       }
       <Table
         classNames={{ wrapper: 'min-h-[222px]' }}
+        topContent={topContent}
         bottomContent={
           <div className="flex w-full justify-center">
             <Pagination

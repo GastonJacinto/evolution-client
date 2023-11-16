@@ -29,28 +29,23 @@ export default function NavBar() {
   const pathname = usePathname();
   return (
     <Navbar isBordered className="fixed bg-black bg-opacity-60 h-[4rem] ">
-      {pathname !== '/profile' ? (
+      {pathname === '/' && (
         <>
-          <NavbarContent className="sm:hidden " justify="center">
+          <NavbarContent className="sm:hidden" justify="center">
             <NavbarMenuToggle className="text-[#f59b4b]" />
           </NavbarContent>{' '}
         </>
-      ) : null}
+      )}
 
       <NavbarContent className="sm:hidden pr-3" justify="start">
         <NavbarBrand>
           <Link
-            href={
-              pathname === '/auth/login' || pathname === '/profile'
-                ? '/'
-                : '#home'
-            }
-            className=""
+            href={'/'}
+            className="w-[3rem] flex items-center justify-center"
           >
             <Image
               src={logo}
               alt="logo"
-              width="65"
               priority={true}
               className="cursor-pointer "
             />
@@ -61,19 +56,15 @@ export default function NavBar() {
       <NavbarContent className="hidden sm:flex gap-6" justify="center">
         <NavbarBrand>
           <Link
-            href={
-              pathname === '/auth/login' || pathname === '/profile'
-                ? '/'
-                : '#home'
-            }
-            className=""
+            href={'/'}
+            className="w-[3rem] flex items-center justify-center"
           >
             <Image
               src={logo}
               alt="logo"
-              width="65"
+              width="90"
               priority={true}
-              className="cursor-pointer "
+              className="cursor-pointer"
             />
           </Link>
         </NavbarBrand>
@@ -106,13 +97,10 @@ export default function NavBar() {
       {
         //! ----------------- ESTO SE BORRA DESPUES -----------------
       }
-      {/* {userProfile.email && pathname === '/' ? (
-        <Button className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium ">
-          <Link href={'/auth/login'}>Iniciar sesión</Link>
-        </Button>
-      ) : ( */}
+
       {session ? (
         <Button
+          size="sm"
           onPress={() => {
             router.push('/profile');
           }}
@@ -123,6 +111,7 @@ export default function NavBar() {
         </Button>
       ) : pathname === '/auth/login' ? null : (
         <Button
+          size="sm"
           onPress={() => {
             router.push('/auth/login');
           }}
@@ -134,6 +123,7 @@ export default function NavBar() {
       )}
       {/* )} */}
       <Button
+        size="sm"
         onPress={() => {
           router.push('/dashboard');
         }}
