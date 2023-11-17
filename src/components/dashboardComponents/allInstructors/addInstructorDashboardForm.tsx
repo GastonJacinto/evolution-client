@@ -10,7 +10,7 @@ import { CgGym } from 'react-icons/cg';
 import { LiaBirthdayCakeSolid } from 'react-icons/lia';
 import { MdOutlineMailOutline } from 'react-icons/md';
 import { PiIdentificationCardLight } from 'react-icons/pi';
-import { RiLockPasswordLine } from 'react-icons/ri';
+import { TiUserAdd } from 'react-icons/ti';
 
 export default function AddInstructorDashboardForm() {
   //! ------------------------------ H O O K S ---------------------------------
@@ -25,11 +25,16 @@ export default function AddInstructorDashboardForm() {
     password: '',
     email: '',
     phone: '',
-    genre: '',
     dni: '',
     image: '',
   });
   //!---------------------- FUNCTIONS -----------------------
+  function resetForm() {
+    const form = document.getElementById('form') as HTMLFormElement | null;
+    if (form) {
+      form.reset();
+    }
+  }
   const handleChange = (
     event:
       | React.ChangeEvent<HTMLInputElement>
@@ -51,12 +56,17 @@ export default function AddInstructorDashboardForm() {
       return;
     }
     toast.success(
-      'Instructor agregado con éxito. Habilite su cuenta desde el panel "Instructores".'
+      'Instructor agregado con éxito. Habilite su cuenta desde el panel "Instructores".',
+      {
+        duration: 4000,
+      }
     );
+    resetForm();
     setPending(false);
   };
   return (
     <form
+      id="form"
       onSubmit={handleSubmit}
       className="w-[90%] max-w-[30rem] p-2 h-full flex flex-col gap-2 text-whit bg-zinc-800 rounded-xl items-center"
     >
@@ -124,51 +134,29 @@ export default function AddInstructorDashboardForm() {
           startContent={<BsTelephone className="registerIcons" />}
           className=" text-black w-[50%]"
         />
-        <Select
+        <Input
           size="lg"
-          aria-label="gender"
+          label="Número de documento"
+          type="text"
+          aria-label="dni"
+          name="dni"
+          placeholder="DNI"
           isRequired
-          label="Género"
-          radius="lg"
-          className="text-black w-[50%]  "
           onChange={handleChange}
-          name="genre"
-          startContent={<BsGenderAmbiguous className="registerIcons" />}
-          placeholder="Género"
-        >
-          <SelectItem key="masc" color="warning">
-            Masculino
-          </SelectItem>
-          <SelectItem key="fem" color="warning">
-            Femenino
-          </SelectItem>
-          <SelectItem key="other" color="warning">
-            Otro
-          </SelectItem>
-        </Select>
+          startContent={<PiIdentificationCardLight className="registerIcons" />}
+          className="w-[50%] text-black "
+        />
       </div>
-      <Input
-        size="lg"
-        label="Número de documento"
-        type="text"
-        aria-label="dni"
-        name="dni"
-        placeholder="DNI"
-        isRequired
-        onChange={handleChange}
-        startContent={<PiIdentificationCardLight className="registerIcons" />}
-        className=" text-black "
-      />
       <Button
         type="submit"
         isDisabled={pending}
-        className="group bg-[#f59b4b] text-black font-semibold  flex items-center p-2 w-[100%]  rounded-xl gap-2 justify-center hover:scale-110 active:scale-105 transition-all mt-5"
+        className="group bg-[#f59b4b] text-black font-semibold  flex items-center p-2 w-[100%]  rounded-xl gap-2 justify-center hover:scale-105 active:scale-105 transition-all mt-5"
       >
         {pending ? (
-          <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-black "></div>
+          <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-white "></div>
         ) : (
           <>
-            <CgGym className="group-hover:scale-125 group-hover:rotate-[34deg] transition-all text-2xl" />
+            <TiUserAdd className="group-hover:scale-125 group-hover:rotate-[34deg] transition-all text-2xl" />
             Agregar instructor
           </>
         )}

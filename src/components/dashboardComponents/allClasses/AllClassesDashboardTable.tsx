@@ -226,10 +226,11 @@ export default function AllClassesDashboardTable() {
                   <ModalHeader className="flex flex-col gap-1">
                     {!isLoading ? (
                       <p className="text-center flex gap-2 items-center justify-center">
-                        <AiFillWarning /> ¿Quieres
+                        <AiFillWarning className="text-yellow-500 text-2xl" />{' '}
+                        ¿Quieres
                         <span className="font-bold underline">eliminar</span>
                         esta clase?
-                        <AiFillWarning />
+                        <AiFillWarning className="text-yellow-500 text-2xl" />
                       </p>
                     ) : (
                       <p className="text-center">
@@ -245,7 +246,12 @@ export default function AllClassesDashboardTable() {
                         <p>
                           Ten en cuenta que esta acción{' '}
                           <span className="font-semibold text-red-600">NO</span>{' '}
-                          puede deshacerse.
+                          puede deshacerse. Si hay alumnos que reservaron en
+                          esta clase,{' '}
+                          <span className="font-semibold">
+                            se les devolverá
+                          </span>{' '}
+                          el crédito que gastaron.
                         </p>
                       </ModalBody>
                       <ModalFooter>
@@ -319,6 +325,7 @@ export default function AllClassesDashboardTable() {
           </TableColumn>
         </TableHeader>
         <TableBody
+          isLoading={isLoading}
           loadingContent={<Spinner />}
           emptyContent={'No hay clases registradas.'}
         >

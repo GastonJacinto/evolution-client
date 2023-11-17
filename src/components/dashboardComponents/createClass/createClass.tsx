@@ -154,7 +154,7 @@ export default function CreateClass() {
         </Select>
         <Button
           type="submit"
-          disabled={disabled}
+          isDisabled={disabled}
           className="bg-[#f59b4b] text-md font-semibold  mt-5"
         >
           {!disabled ? (

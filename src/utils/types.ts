@@ -6,7 +6,7 @@ export type FormDataType = {
   password: string;
   email: string;
   phone: string;
-  genre: string;
+  genre?: string;
   dni: string;
   image?: string;
 };
