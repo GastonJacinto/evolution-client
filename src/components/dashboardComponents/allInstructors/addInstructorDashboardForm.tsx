@@ -58,10 +58,11 @@ export default function AddInstructorDashboardForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-[90%] p-2 h-full flex flex-col gap-2 text-whit bg-zinc-800 rounded-xl items-center"
+      className="w-[90%] max-w-[25rem] p-2 h-full flex flex-col gap-2 text-whit bg-zinc-800 rounded-xl items-center"
     >
       <div className="flex gap-2 w-full">
         <Input
+          label="Nombre"
           type="text"
           name="name"
           aria-label="Nombre"
@@ -75,6 +76,7 @@ export default function AddInstructorDashboardForm() {
         <Input
           type="text"
           size="lg"
+          label="Apellido"
           aria-label="Apellido"
           placeholder="Apellido"
           name="lastname"
@@ -91,6 +93,7 @@ export default function AddInstructorDashboardForm() {
         name="email"
         aria-label="email"
         placeholder="olimpo@olimpo.com"
+        label="Correo electrónico"
         isRequired
         onChange={handleChange}
         startContent={<MdOutlineMailOutline className="registerIcons" />}
@@ -102,6 +105,7 @@ export default function AddInstructorDashboardForm() {
         aria-label="birth"
         name="birth"
         placeholder="Fecha de nacimiento"
+        label="Fecha de nacimiento"
         isRequired
         startContent={<LiaBirthdayCakeSolid className="registerIcons" />}
         onChange={handleChange}
@@ -111,6 +115,7 @@ export default function AddInstructorDashboardForm() {
         <Input
           size="lg"
           type="text"
+          label="Celular"
           aria-label="phone"
           name="phone"
           placeholder="0123456789"
@@ -120,9 +125,10 @@ export default function AddInstructorDashboardForm() {
           className=" text-black w-[50%]"
         />
         <Select
-          size="sm"
+          size="lg"
           aria-label="gender"
           isRequired
+          label="Género"
           radius="lg"
           className="text-black w-[50%]  "
           onChange={handleChange}
@@ -143,6 +149,7 @@ export default function AddInstructorDashboardForm() {
       </div>
       <Input
         size="lg"
+        label="Número de documento"
         type="text"
         aria-label="dni"
         name="dni"

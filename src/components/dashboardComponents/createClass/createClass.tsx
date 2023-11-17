@@ -86,6 +86,7 @@ export default function CreateClass() {
         className="w-[60%] min-w-[17rem] max-w-[30rem] flex flex-col gap-2 p-2 bg-zinc-800 rounded-lg"
       >
         <Input
+          size="lg"
           type="text"
           label="Nombre de la clase"
           aria-label="name"
@@ -96,6 +97,7 @@ export default function CreateClass() {
           className="w-[100%] text-black "
         />
         <Input
+          size="lg"
           type="number"
           label="Límite de estudiantes"
           aria-label="limit"
@@ -106,6 +108,7 @@ export default function CreateClass() {
           className="w-[100%] text-black "
         />
         <Input
+          size="lg"
           type="datetime-local"
           name="date"
           aria-label="date"
@@ -117,7 +120,7 @@ export default function CreateClass() {
           className="w-[100%] text-black "
         />
         <Select
-          size="md"
+          size="lg"
           aria-label="instructor"
           startContent={<GiTeacher className="registerIcons" />}
           placeholder="Instructor de la clase"

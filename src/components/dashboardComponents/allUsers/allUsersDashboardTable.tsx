@@ -115,9 +115,10 @@ export default function AllUsersDashboardTable() {
     let filteredUsers = [...users];
 
     if (hasSearchFilter) {
-      filteredUsers = filteredUsers.filter((user) =>
-        user.name.toLowerCase().includes(filterValue.toLowerCase())
-      );
+      filteredUsers = filteredUsers.filter((user) => {
+        const userName = user.name + ' ' + user.lastname;
+        return userName.toLowerCase().includes(filterValue.toLowerCase());
+      });
     }
     return filteredUsers;
   }, [users, filterValue, hasSearchFilter]);
@@ -245,7 +246,6 @@ export default function AllUsersDashboardTable() {
         </Modal>
       }
       <Table
-        classNames={{ wrapper: 'min-h-[222px]' }}
         topContent={topContent}
         bottomContent={
           <div className="flex w-full justify-center">
@@ -261,7 +261,7 @@ export default function AllUsersDashboardTable() {
           </div>
         }
         isHeaderSticky
-        className="w-[95%] max-w-[50rem] min-h-[25rem] h-[60vh]"
+        className="w-[95%] max-w-[50rem] min-h-[26rem] h-[70vh]"
         aria-label="Example static collection table"
       >
         <TableHeader>
