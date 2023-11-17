@@ -11,7 +11,7 @@
   @apply font-semibold text-black flex items-center gap-2;
 }
 .h2SectionOne {
-  @apply font-bold  text-[4rem] cursor-default;
+  @apply font-bold  text-[3rem] cursor-default;
 }
 .registerIcons {
   @apply text-black text-2xl;

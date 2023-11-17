@@ -83,7 +83,7 @@ export default function CreateClass() {
       />
       <form
         onSubmit={handleSubmit}
-        className="w-[60%] min-w-[17rem] max-w-[30rem] flex flex-col gap-2 p-2 bg-zinc-800 rounded-lg"
+        className="w-[90%]  max-w-[30rem] flex flex-col gap-2 p-2 bg-zinc-800 rounded-lg"
       >
         <Input
           size="lg"
@@ -155,7 +155,7 @@ export default function CreateClass() {
         <Button
           type="submit"
           disabled={disabled}
-          className="bg-[#f59b4b] text-md font-semibold "
+          className="bg-[#f59b4b] text-md font-semibold  mt-5"
         >
           {!disabled ? (
             <span className="flex items-center justify-center gap-2">

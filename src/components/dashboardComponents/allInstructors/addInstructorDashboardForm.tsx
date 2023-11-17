@@ -58,7 +58,7 @@ export default function AddInstructorDashboardForm() {
   return (
     <form
       onSubmit={handleSubmit}
-      className="w-[90%] max-w-[25rem] p-2 h-full flex flex-col gap-2 text-whit bg-zinc-800 rounded-xl items-center"
+      className="w-[90%] max-w-[30rem] p-2 h-full flex flex-col gap-2 text-whit bg-zinc-800 rounded-xl items-center"
     >
       <div className="flex gap-2 w-full">
         <Input

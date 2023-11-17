@@ -135,14 +135,14 @@ export default function NavBar() {
         //! ----------------- ESTO SE BORRA DESPUES -----------------
       }
 
-      <NavbarMenu className="bg-black w-[75%] bg-opacity-60 ">
+      <NavbarMenu className="bg-black w-[75%] max-w-[22rem] bg-opacity-60 ">
         {navLinks.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>
             <Link
-              className="w-[70%] text-xl text-[#f59b4b] font-valorant font-bold"
+              className="w-[70%] flex items-center gap-2 text-xl text-[#f59b4b] font-valorant font-bold"
               href={`#${item.hash}`}
             >
-              {item.name}
+              {item.icon} {item.name}
             </Link>
           </NavbarMenuItem>
         ))}

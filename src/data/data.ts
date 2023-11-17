@@ -8,16 +8,24 @@ import { GrTable, GrTableAdd } from 'react-icons/gr';
 import { FaUsers, FaUsersGear } from 'react-icons/fa6';
 import { TbCardsFilled } from 'react-icons/tb';
 import { FaEdit } from 'react-icons/fa';
+import { BsCashCoin } from 'react-icons/bs';
+import { FaCalendarAlt } from 'react-icons/fa';
+import { GiConqueror } from 'react-icons/gi';
+
 export const navLinks = [
   {
     name: 'Precios',
+    icon: React.createElement(BsCashCoin),
     hash: 'precios',
   },
-  { name: 'Horarios', hash: 'horarios' },
-
-  { name: 'Clases', hash: 'clases' },
+  {
+    name: 'Horarios',
+    hash: 'horarios',
+    icon: React.createElement(FaCalendarAlt),
+  },
   {
     name: 'Sobre nosotros',
+    icon: React.createElement(GiConqueror),
     hash: 'about',
   },
 ] as const;

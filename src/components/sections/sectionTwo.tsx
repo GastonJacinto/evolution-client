@@ -28,7 +28,7 @@ export default function SectionTwo() {
       opacity: 1,
       y: 0,
       transition: {
-        delay: 0.1,
+        delay: 0.2,
       },
     }),
   };
@@ -39,7 +39,7 @@ export default function SectionTwo() {
       whileInView="animate"
       id="precios"
       viewport={{ once: true }}
-      className="w-full flex flex-col items-center scroll-mt-20 md:scroll-mt-44 mt-10 p-5"
+      className="w-full  h-full flex flex-col items-center scroll-mt-20 md:scroll-mt-44  p-5 "
     >
       <h1 className="text-[2rem] font-semibold mb-4">
         <span className=" md:text-5xl text-[#cf9050] ">PLANES</span>{' '}
