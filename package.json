@@ -17,6 +17,7 @@
     "@reduxjs/toolkit": "^1.9.7",
     "cloudinary": "^1.41.0",
     "date-fns": "^2.30.0",
+    "date-fns-tz": "^2.0.0",
     "framer-motion": "^10.16.4",
     "jwt-decode": "^3.1.2",
     "next": "13.5.4",

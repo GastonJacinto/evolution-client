@@ -41,6 +41,7 @@ import { removeStudentFromClass } from '@/app/api/actions/removeStudentFromClass
 import { CgCalendar } from 'react-icons/cg';
 import { BiSolidUser } from 'react-icons/bi';
 import { getAllClassesFunction } from '@/utils/utils';
+import { utcToZonedTime } from 'date-fns-tz';
 
 export default function AllClassesDashboardTable() {
   //! ------------------ H O O K S -----------------------------
@@ -57,7 +58,9 @@ export default function AllClassesDashboardTable() {
   // SI ESTA EN FALSE, MUESTRA LA INFO DE LA CLASE, SINO, LA MODAL PARA CONFIRMAR ELIMINACION DE LA CLASE.
   const [showInfo, setShowInfo] = React.useState(false);
   const { isOpen, onOpen, onOpenChange } = useDisclosure();
-  const classes = useAppSelector((state) => state.gymClassesSlice.allClasses);
+  const classes: GymClassType[] = useAppSelector(
+    (state) => state.gymClassesSlice.allClasses
+  );
   //! ------------------ F U N C T I O N S -----------------------------
   function setDataToClassInfo(
     className: string,
@@ -106,10 +109,14 @@ export default function AllClassesDashboardTable() {
   }
   //! ------------------ C O N S T A N T S -----------------------------
   const mappedClass = classes?.map((clase, i) => {
-    const unformatedDate = new Date(clase.date);
-    const date = format(unformatedDate, 'EEEE, d MMMM HH:mm', {
+    const unformattedDate = new Date(clase.date);
+    const timeZone = 'America/Argentina/Buenos_Aires';
+
+    const zonedDate = utcToZonedTime(unformattedDate, timeZone);
+    const date = format(zonedDate, 'EEEE, d MMMM HH:mm', {
       locale: es,
     });
+
     return {
       ...clase,
       date: date,

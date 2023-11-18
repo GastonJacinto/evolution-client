@@ -34,6 +34,7 @@ import {
 import { loadProfile } from '@/app/redux/features/userProfileSlice';
 import { loadAllClasses } from '@/app/redux/features/gymClassesSlice';
 import { useSession } from 'next-auth/react';
+import { utcToZonedTime } from 'date-fns-tz';
 
 export default function AllClassesTable() {
   //! ------------------ H O O K S -----------------------------
@@ -99,14 +100,18 @@ export default function AllClassesTable() {
         userInClass = true;
       }
     });
-    const unformatedDate = new Date(clase.date);
-    const date = format(unformatedDate, 'EEEE, d MMMM HH:mm', {
+    const unformattedDate = new Date(clase.date);
+    const timeZone = 'America/Argentina/Buenos_Aires';
+
+    const zonedDate = utcToZonedTime(unformattedDate, timeZone);
+    const date = format(zonedDate, 'EEEE, d MMMM HH:mm', {
       locale: es,
     });
+
     return {
       ...clase,
-      date: date,
       userInClass,
+      date: date,
     };
   });
 
