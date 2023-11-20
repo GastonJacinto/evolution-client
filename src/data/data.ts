@@ -1,13 +1,13 @@
 import React from 'react';
 import { CgProfile } from 'react-icons/cg';
-import { MdSportsGymnastics } from 'react-icons/md';
+import { MdSecurity, MdSportsGymnastics } from 'react-icons/md';
 import { BiMoneyWithdraw } from 'react-icons/bi';
 import { BsCalendarCheck, BsPersonFillAdd, BsTable } from 'react-icons/bs';
 import { PlanEnum } from '@/utils/types';
 import { GrTable, GrTableAdd } from 'react-icons/gr';
 import { FaUsers, FaUsersGear } from 'react-icons/fa6';
 import { TbCardsFilled } from 'react-icons/tb';
-import { FaEdit } from 'react-icons/fa';
+import { FaEdit, FaUserCog } from 'react-icons/fa';
 import { BsCashCoin } from 'react-icons/bs';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { GiConqueror } from 'react-icons/gi';
@@ -142,3 +142,16 @@ export const drawerOptions = [
     icon: React.createElement(CgProfile),
   },
 ] as const;
+
+export const editProfileOptions = [
+  {
+    name: 'Opciones generales',
+    tab: 1,
+    icon: React.createElement(FaUserCog),
+  },
+  {
+    name: 'Opciones de seguridad',
+    tab: 2,
+    icon: React.createElement(MdSecurity),
+  },
+];

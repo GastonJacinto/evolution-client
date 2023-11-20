@@ -37,7 +37,6 @@ export default function RegisterPage() {
     dni: '',
     image: '',
   });
-  const [blockRegister, setBlockRegister] = React.useState(false);
   const [role, setRole] = React.useState<RoleEnum>(RoleEnum.USER);
   const router = useRouter();
   //!---------------------- FUNCTIONS -----------------------
@@ -73,6 +72,14 @@ export default function RegisterPage() {
       setPending(false);
     }, 2000);
   };
+  //! ----------------------- VARIABLES ------------------------------
+  const today = new Date();
+  const minDate = new Date(
+    today.getFullYear() - 13,
+    today.getMonth(),
+    today.getDate()
+  );
+  const minDateString = minDate.toISOString().split('T')[0];
   return (
     <div className="h-full pt-16 2xl:pt-32 w-full flex items-center justify-center text-center">
       <motion.div
@@ -84,13 +91,13 @@ export default function RegisterPage() {
           y: 0,
           opacity: 1,
         }}
-        className="relative w-[min(100%,30rem)] m-3 h-[35rem] flex flex-col items-center rounded-xl bg-zinc-800"
+        className="relative w-[min(100%,30rem)] m-3 h-full flex flex-col items-center rounded-xl bg-zinc-800"
       >
         <div className="w-full relative ">
           {' '}
           <h1 className="text-white text-2xl sm:text-3xl pt-4 transition-all">
             Bienvenido a{' '}
-            <span className="text-[#f59b4b] font-bold">OLIMPO</span>
+            <span className="text-[#f59b4b] font-bold underline">OLIMPO</span>
           </h1>
         </div>
 
@@ -170,9 +177,10 @@ export default function RegisterPage() {
             name="birth"
             placeholder="Fecha de nacimiento"
             isRequired
+            max={minDateString}
             startContent={<LiaBirthdayCakeSolid className="registerIcons" />}
             onChange={handleChange}
-            className=" text-black  "
+            className="text-black"
           />
           <div className="flex gap-2 w-full  ">
             <Input
@@ -221,10 +229,15 @@ export default function RegisterPage() {
             }
             className=" text-black "
           />
+          <p className="text-tiny font-light">
+            <span className="text-red-500">*</span> Debes ser{' '}
+            <span className="font-semibold">mayor</span> a 13 años para
+            registrarte.
+          </p>
           <Button
             type="submit"
             isDisabled={pending}
-            className="group bg-[#f59b4b] text-black font-semibold  flex items-center p-2 w-[100%]  rounded-xl gap-2 justify-center hover:scale-110 active:scale-105 transition-all mt-5"
+            className="group bg-[#f59b4b] text-black font-semibold  flex items-center p-2 w-[100%]  rounded-xl gap-2 justify-center hover:scale-110 active:scale-105 transition-all mt-3"
           >
             {pending ? (
               <div className="h-5 w-5 animate-spin rounded-full border-b-2 border-black "></div>
@@ -237,7 +250,7 @@ export default function RegisterPage() {
           </Button>
           <Divider className="my-1 bg-white" />
           <Link href={'/auth/login'}>
-            <p className="hover:underline">
+            <p className="underline tracking-widest">
               Ya tengo una cuenta en{' '}
               <span className="text-[#f59b4b]">OLIMPO</span>
             </p>

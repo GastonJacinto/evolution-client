@@ -17,6 +17,7 @@ import RechargeCredits from '@/components/rechargeCredits/rechargeCredits';
 import { useRouter } from 'next/navigation';
 import { getAllPlans } from '../api/actions/getPlans';
 import { loadAllPlans } from '../redux/features/allPlansSlice';
+import EditProfile from '@/components/editProfile/editProfile';
 
 export default function Profile() {
   //!----------- HOOKS -----------------
@@ -30,7 +31,7 @@ export default function Profile() {
     dispatchToChargePlans();
     getClassesToTable();
     deletingClassesToInactive(classes);
-  }, []);
+  });
   //!----------- FUNCTIONS -----------------
   async function dispatchToChargePlans() {
     const { plans, error } = await getAllPlans();
@@ -68,6 +69,8 @@ export default function Profile() {
         return <AllClasses />;
       case 3:
         return <RechargeCredits />;
+      case 4:
+        return <EditProfile />;
       default:
         return <MyClasses />;
     }

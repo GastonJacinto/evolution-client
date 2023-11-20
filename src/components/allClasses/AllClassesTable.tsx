@@ -19,7 +19,7 @@ import { useAppDispatch, useAppSelector } from '@/utils/hooks';
 import { ActiveAccount } from '@/utils/types';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-import { reserveClass } from '@/app/api/actions/reserveClass';
+import { reserveClass } from '@/app/api/actions/userActions/reserveClass';
 import toast from 'react-hot-toast';
 import { GiGymBag } from 'react-icons/gi';
 import { BsCalendarEvent } from 'react-icons/bs';

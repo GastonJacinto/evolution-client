@@ -8,9 +8,8 @@ import { drawerOptions } from '@/data/data';
 import { RiLogoutCircleLine } from 'react-icons/ri';
 import { useAppDispatch, useAppSelector } from '@/utils/hooks';
 import { changeTab } from '@/app/redux/features/drawerSelectorSlice';
-import { signOut } from 'next-auth/react';
 import { useRouter } from 'next/navigation';
-import { useSession } from 'next-auth/react';
+import { useSession, signOut } from 'next-auth/react';
 import { FaCoins } from 'react-icons/fa6';
 
 const DrawerProfile = () => {
@@ -37,21 +36,21 @@ const DrawerProfile = () => {
   const userGender = userProfile.genre === 'masc' ? 'Bienvenido' : 'Bienvenida';
   return (
     <div
-      className={`z-10 mt-[5rem] h-full fixed flex flex-col transition-all  ${
+      className={`z-10 mt-[5rem] h-full fixed flex flex-col transition-all overflow-scroll ${
         !open
-          ? 'w-[2rem] bg-opacity-100'
+          ? 'w-[1.7rem] bg-opacity-100'
           : 'bg-zinc-600 w-[15rem]  bg-opacity-90 '
       }`}
     >
       {userProfile.email ? (
         <button
           onClick={toggleOpen}
-          className="absolute z-20 top-1 right-0 w-[2rem] h-[2rem] flex items-center justify-center transition-all"
+          className="absolute z-20 top-1 right-0 w-[1.7rem] h-[1.7rem] flex items-center justify-center transition-all"
         >
           {open ? (
-            <BiArrowToLeft className="w-[2rem] h-[2rem] duration-400 text-white hover:-translate-x-1" />
+            <BiArrowToLeft className="w-[1.5rem] h-[1.5rem] duration-400 text-white hover:-translate-x-1" />
           ) : (
-            <BiArrowToLeft className="w-[2rem] h-[2rem] -rotate-180 duration-400 bg-gray-500 bg-opacity-30 rounded-full text-white hover:translate-x-1" />
+            <BiArrowToLeft className="w-[1.5rem] h-[1.5rem] -rotate-180 duration-400 bg-[#f59b4b] rounded-full text-black hover:translate-x-1" />
           )}
         </button>
       ) : (
@@ -62,9 +61,9 @@ const DrawerProfile = () => {
           open ? '' : 'hidden'
         }`}
       >
-        <div className="flex items-center justify-center flex-col mt-1 ">
+        <div className="flex items-center  w-full  justify-center flex-col mt-1 ">
           <img
-            src="https://i.pravatar.cc/150?u=a042581f4e29026024d"
+            src="https://res.cloudinary.com/db7wpgkge/image/upload/v1699670220/evolution-training/cnuybcladukvdvshayd4.png"
             className="w-20 h-20 rounded-full "
           />
           <p className="font-semibold text-white capitalize">

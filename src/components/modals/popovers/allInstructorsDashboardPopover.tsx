@@ -10,7 +10,7 @@ export default function AllInstructorsDashboardPopover() {
   return (
     <Popover placement="bottom">
       <PopoverTrigger>
-        <button className="w-[2rem] bg-[#f59b4b] border-1 border-black font-bold text-black rounded-full hover:scale-110 active:scale-105 transition-all">
+        <button className="w-8 h-8 text-xl bg-[#f59b4b] border-1 border-black font-bold text-black rounded-full hover:scale-110 active:scale-105 transition-all">
           ?
         </button>
       </PopoverTrigger>

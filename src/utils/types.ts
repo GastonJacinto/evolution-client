@@ -10,7 +10,18 @@ export type FormDataType = {
   dni: string;
   image?: string;
 };
-
+export type EditProfileType = {
+  name?: string;
+  lastname?: string;
+  birth?: string;
+  phone?: string;
+  dni?: string;
+};
+export type ChangePasswordType = {
+  newPassword: string;
+  actualPassword: string;
+  email: string;
+};
 //!------------- OBJECT TYPES -------------
 export interface UserType extends InstructorType {
   remaining_classes: number;
