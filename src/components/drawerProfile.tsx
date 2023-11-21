@@ -36,7 +36,7 @@ const DrawerProfile = () => {
   const userGender = userProfile.genre === 'masc' ? 'Bienvenido' : 'Bienvenida';
   return (
     <div
-      className={`z-10 mt-[5rem] h-full fixed flex flex-col transition-all overflow-scroll ${
+      className={`z-10 mt-[5rem] pb-16 h-full fixed flex flex-col  transition-all ${
         !open
           ? 'w-[1.7rem] bg-opacity-100'
           : 'bg-zinc-600 w-[15rem]  bg-opacity-90 '
@@ -45,7 +45,7 @@ const DrawerProfile = () => {
       {userProfile.email ? (
         <button
           onClick={toggleOpen}
-          className="absolute z-20 top-1 right-0 w-[1.7rem] h-[1.7rem] flex items-center justify-center transition-all"
+          className="absolute z-[1000] top-1 right-0 w-[1.7rem] h-[1.7rem] flex items-center justify-center transition-all"
         >
           {open ? (
             <BiArrowToLeft className="w-[1.5rem] h-[1.5rem] duration-400 text-white hover:-translate-x-1" />
@@ -57,23 +57,26 @@ const DrawerProfile = () => {
         <div className="absolute z-20 top-[.5rem] left-[.5rem] w-[1.5rem] h-[1.5rem] animate-spin border-b-2 border white rounded-full"></div>
       )}
       <div
-        className={`relative h-full p-2 flex flex-col items-center text-[#f3f0e5] ${
+        className={`relative h-full p-2 flex flex-col items-center text-[#f3f0e5] overflow-auto ${
           open ? '' : 'hidden'
         }`}
       >
-        <div className="flex items-center  w-full  justify-center flex-col mt-1 ">
+        <div className="flex items-center w-full justify-center flex-col mt-1 ">
           <img
             src="https://res.cloudinary.com/db7wpgkge/image/upload/v1699670220/evolution-training/cnuybcladukvdvshayd4.png"
             className="w-20 h-20 rounded-full "
           />
           <p className="font-semibold text-white capitalize">
-            {userGender}, {userProfile.name} {userProfile.lastname}
+            {userGender},{' '}
+            <span className="text-[#f59b4b]">
+              {userProfile.name} {userProfile.lastname}
+            </span>
           </p>
         </div>
-        <div className="mt-10 w-full flex flex-col cursor-default">
+        <div className="mt-5 w-full h-[full] pb-10 flex flex-col cursor-default">
           <div className="group mx-1 p-2 text-center border-1 rounded-md bg-zinc-700 transition-all">
             <p className="flex items-center gap-2">
-              <FaCoins className="text-2xl" /> Créditos restantes:{' '}
+              <FaCoins className="text-xl" /> Créditos restantes:{' '}
               <span className="group-hover:scale-125 transition-all ">
                 {userProfile.remaining_classes || 0}
               </span>
@@ -101,20 +104,22 @@ const DrawerProfile = () => {
             );
           })}
         </div>
-        <div
-          onClick={() => {
-            handleSignOut();
-          }}
-          className="fixed bottom-2 flex items-center w-[12rem] p-1 justify-center gap-2 border-gray-500 border-1 rounded-xl bg-zinc-950 bg-opacity-30 group hover:scale-105 transition-all cursor-pointer active:scale-100"
-        >
-          {!loggingOut ? (
-            <>
-              <RiLogoutCircleLine className="w-[1rem] h-[1rem] group-hover:-translate-x-5 group-hover:scale-125 transition-all" />{' '}
-              Cerrar sesión
-            </>
-          ) : (
-            <div className=" w-[1.5rem] h-[1.5rem] animate-spin border-b-2 border white rounded-full"></div>
-          )}
+        <div className="fixed w-[15rem] h-[3rem] border-t-1 border-zinc-700 bottom-0 bg-zinc-600 flex items-center justify-center">
+          <button
+            className="group flex items-center gap-2 border-1 border-zinc-700 bg-zinc-800 bg-opacity-50 py-1 px-5 rounded-xl"
+            onClick={() => {
+              handleSignOut();
+            }}
+          >
+            {!loggingOut ? (
+              <>
+                <RiLogoutCircleLine className="w-[1rem] h-[1rem] group-hover:-rotate-180 group-hover:scale-125 transition-all" />{' '}
+                Cerrar sesión
+              </>
+            ) : (
+              <div className=" w-[1.5rem] h-[1.5rem] animate-spin border-b-2 border white rounded-full"></div>
+            )}
+          </button>
         </div>
       </div>
     </div>
