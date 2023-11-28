@@ -261,7 +261,7 @@ export default function AllUsersDashboardTable() {
           </div>
         }
         isHeaderSticky
-        className="w-[95%] max-w-[50rem] min-h-[26rem] h-[70vh]"
+        className="w-[95%] max-w-[55rem] min-h-[26rem] h-[70vh]"
         aria-label="Example static collection table"
       >
         <TableHeader>

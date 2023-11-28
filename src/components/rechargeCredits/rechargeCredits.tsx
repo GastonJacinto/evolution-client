@@ -42,9 +42,9 @@ export default function RechargeCredits() {
       </h3>
       <Divider
         aria-label="divider"
-        className="bg-white w-[90%] max-w-[50rem] my-4"
+        className="bg-white w-[90%] max-w-[55rem] my-4"
       />
-      <div className=" flex items-center justify-center bg-gray-700 w-[80%] max-w-[50rem] -mt-2 mb-2 rounded-lg">
+      <div className=" flex items-center justify-center bg-gray-700 w-[80%] max-w-[55rem] -mt-2 mb-2 rounded-lg">
         <p className="text-tiny w-[90%] items-center p-1 text-white font-light flex justify-center gap-3">
           <IoWarning className="text-[50px] sm:text-[30px] text-yellow-400" />{' '}
           <span>

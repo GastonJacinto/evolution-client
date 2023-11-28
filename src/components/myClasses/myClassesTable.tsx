@@ -181,7 +181,7 @@ export default function MyClassesTable() {
         </Modal>
       ) : null}
       <Table
-        className="w-[95%] max-w-[50rem]"
+        className="w-[95%] max-w-[55rem]"
         aria-label="Example static collection table"
       >
         <TableHeader>

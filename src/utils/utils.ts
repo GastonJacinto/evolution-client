@@ -66,6 +66,7 @@ export async function getAllInstructorsFunction() {
 type PayerDataType = {
   email: string;
   name: string;
+  dni: string;
 };
 export async function getPlansForCredits(
   planData: PlanType,
@@ -73,6 +74,7 @@ export async function getPlansForCredits(
 ) {
   let data;
   const createPayment: CreatePaymentType = {
+    id: planData.id,
     description: planData.description,
     title: planData.name,
     quantity: 1,
@@ -82,6 +84,10 @@ export async function getPlansForCredits(
     payer: {
       name: payerData.name,
       email: payerData.email,
+      identification: {
+        type: 'DNI',
+        number: payerData.dni,
+      },
     },
   };
   try {

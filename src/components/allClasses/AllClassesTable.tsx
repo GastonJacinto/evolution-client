@@ -193,7 +193,7 @@ export default function AllClassesTable() {
       ) : null}
       <Table
         isHeaderSticky
-        className="w-[95%] max-w-[50rem] "
+        className="w-[95%] max-w-[55rem] "
         aria-label="Example static collection table"
       >
         <TableHeader>

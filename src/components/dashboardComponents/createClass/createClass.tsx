@@ -72,14 +72,14 @@ export default function CreateClass() {
         x: 0,
         opacity: 1,
       }}
-      className="w-[100%] items-center flex flex-col max-w-[50rem]"
+      className="w-[100%] items-center flex flex-col max-w-[55rem]"
     >
       <h3 className="classesH3">
         Aquí puedes <span className="text-[#f59b4b]">crear</span> una clase.
       </h3>
       <Divider
         aria-label="divider"
-        className="bg-white w-[60%] max-w-[50rem] my-4"
+        className="bg-white w-[60%] max-w-[55rem] my-4"
       />
       <form
         onSubmit={handleSubmit}

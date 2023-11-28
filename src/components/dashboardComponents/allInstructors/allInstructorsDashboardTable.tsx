@@ -143,7 +143,7 @@ export default function AllInstructorsDashboardTable() {
 
       <Table
         isHeaderSticky
-        className="w-[95%] max-w-[50rem] min-h-[25rem] h-[60vh]"
+        className="w-[95%] max-w-[55rem] min-h-[25rem] h-[60vh]"
         aria-label="Example static collection table"
       >
         <TableHeader>

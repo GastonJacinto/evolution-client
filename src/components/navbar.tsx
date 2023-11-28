@@ -134,7 +134,6 @@ export default function NavBar() {
       {
         //! ----------------- ESTO SE BORRA DESPUES -----------------
       }
-
       <NavbarMenu className="bg-black w-[75%] max-w-[22rem] bg-opacity-60 ">
         {navLinks.map((item, index) => (
           <NavbarMenuItem key={`${item}-${index}`}>

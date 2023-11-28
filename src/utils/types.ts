@@ -63,6 +63,7 @@ export type GymClassType = {
 };
 
 export type CreatePaymentType = {
+  id: string;
   description: string;
   title: string;
   quantity: number;
@@ -72,6 +73,10 @@ export type CreatePaymentType = {
   payer: {
     name: string;
     email: string;
+    identification: {
+      type: string;
+      number: string;
+    };
   };
 };
 
