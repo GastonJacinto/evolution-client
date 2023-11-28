@@ -66,7 +66,8 @@ export async function getAllInstructorsFunction() {
 type PayerDataType = {
   email: string;
   name: string;
-  dni: string;
+  surname: string;
+  id: string;
 };
 export async function getPlansForCredits(
   planData: PlanType,
@@ -81,12 +82,14 @@ export async function getPlansForCredits(
     unit_price: planData.price,
     image: planData.image,
     currency_id: 'ARS',
+    credits: planData.id,
     payer: {
       name: payerData.name,
+      surname: payerData.surname,
       email: payerData.email,
       identification: {
-        type: 'DNI',
-        number: payerData.dni,
+        type: 'ID',
+        number: payerData.id,
       },
     },
   };

@@ -70,9 +70,11 @@ export type CreatePaymentType = {
   unit_price: number;
   image: string;
   currency_id: string;
+  credits: string;
   payer: {
     name: string;
     email: string;
+    surname: string;
     identification: {
       type: string;
       number: string;

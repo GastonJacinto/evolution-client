@@ -105,7 +105,7 @@ export default function AllInstructorsDashboardTable() {
                       <span className="text-red-700 font-semibold underline">
                         eliminar
                       </span>{' '}
-                      el instructor, las clases a las que se encuentre asignado,
+                      el instructor, las clases a las que se encuentre asignado
                       quedarán{' '}
                       <span className="font-semibold">sin instructor.</span>
                     </p>

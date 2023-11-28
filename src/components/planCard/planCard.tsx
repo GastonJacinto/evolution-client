@@ -33,9 +33,10 @@ export default function PlanCard({
       id: `${credits}`,
     };
     const payerInfo = {
-      name: userProfile.name + ' ' + userProfile.lastname,
+      name: userProfile.name,
+      surname: userProfile.lastname,
       email: userProfile.email,
-      dni: userProfile.dni,
+      id: userProfile.id,
     };
     setIsLoading(true);
     const { data, error } = await getPlansForCredits(planData, payerInfo);
