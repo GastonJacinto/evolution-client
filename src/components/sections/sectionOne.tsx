@@ -15,7 +15,7 @@ export default function SectionOne() {
       }}
       className=" w-full h-[100vh]"
     >
-      <div className="flex w-full  h-full relative items-center justify-center text-center ">
+      <div className="flex w-full h-full relative items-center justify-center text-center">
         <img
           src={
             'https://res.cloudinary.com/db7wpgkge/image/upload/v1697307306/evolution-training/landing/kvebu0hpnmj8cm07k0ua.jpg'
@@ -23,7 +23,7 @@ export default function SectionOne() {
           alt={'landing'}
           className="w-full h-[100%] object-cover z-0"
         />
-        <div className="absolute font-valorant flex items-center flex-col justify-center md:pt-20 bg-gray-950 bg-opacity-50 w-full h-full transition-all">
+        <div className="absolute font-valorant flex items-center flex-col justify-center pt-28 bg-gray-950 bg-opacity-50 w-full h-full transition-all">
           <h2 className="h2SectionOne text-[#cf9050] hover:scale-105 transition-all">
             LOS
           </h2>
