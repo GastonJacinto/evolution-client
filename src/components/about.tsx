@@ -5,7 +5,7 @@ import { GiMuscleUp } from 'react-icons/gi';
 export default function About() {
   const router = useRouter();
   return (
-    <div className="flex flex-col items-center text-xl h-full w-full md:w-[80%] lg:w-[60%] z-10 text-[#cfcfcf] text-center">
+    <div className="flex flex-col items-center text-xl h-full w-full md:w-[70%]  z-10 text-[#cfcfcf] text-center">
       <p className="">
         <span className="text-[#cf9050]">Olimpo Training </span>
         es un gimnasio de élite ubicado en San Martín, Mendoza.
