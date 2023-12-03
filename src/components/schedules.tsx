@@ -2,8 +2,8 @@ import React from 'react';
 
 export default function Schedule() {
   return (
-    <div className=" z-10 flex flex-col items-center text-white text-center">
-      <h6 className="text-lg tracking-wide">
+    <div className=" z-10 flex flex-col items-center text-center text-xl text-[#cfcfcf]">
+      <h6 className=" tracking-wide">
         Contamos con horarios flexibles para que puedas venir cuando quieras.
       </h6>
       <br />

@@ -53,7 +53,7 @@ export default function SectionTwo() {
         <span className=" md:text-5xl text-[#cf9050] ">PRECIOS</span>
       </h1>
       <PlanCards />
-      <p className="text-center w-[100%] md:w-[50%] mt-10 text-lg text-[#cfcfcf] z-10">
+      <p className="text-center w-[100%] md:w-[50%] mt-10 text-xl text-[#cfcfcf] z-10">
         Con nuestros planes te aseguramos que podrás conseguir todos tus
         <span className="tracking-wider text-[#cf9050]"> objetivos.</span>
         <br />

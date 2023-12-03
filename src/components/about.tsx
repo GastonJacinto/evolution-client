@@ -5,16 +5,16 @@ import { GiMuscleUp } from 'react-icons/gi';
 export default function About() {
   const router = useRouter();
   return (
-    <div className="flex flex-col items-center text-xl h-full w-full md:w-[80%] lg:w-[60%] z-10 text-zinc-200 text-center">
+    <div className="flex flex-col items-center text-xl h-full w-full md:w-[80%] lg:w-[60%] z-10 text-[#cfcfcf] text-center">
       <p className="">
         <span className="text-[#cf9050]">Olimpo Training </span>
-        es un gimnasio de élite para toda el área de San Martín, Mendoza.
+        es un gimnasio de élite ubicado en San Martín, Mendoza.
       </p>
       <br />
       <p>
         <span className="text-[#cf9050]">Olimpo </span> nace de una propuesta
         para ofrecerte un lugar donde te puedas desafiar a romper tus límites,
-        ponerte a prueba, mejorar tu calidad de vida, ejercitándote a través de
+        ponerte a prueba y mejorar tu calidad de vida ejercitándote a través de
         las distintas clases que ofrecemos, entregándote toda la ayuda necesaria
         para que logres tu meta:
         <span className="font-semibold tracking-widest">
@@ -23,11 +23,21 @@ export default function About() {
         </span>
       </p>
       <br />
+
+      <p>
+        Con nuestro <span className="text-[#cf9050] ">sistema de créditos</span>
+        , podrás recargar tus clases comprando el plan que mejor se adapte a tus
+        objetivos y metas pagando desde la plataforma mediante{' '}
+        <span className="text-blue-400">Mercado Pago.</span>
+      </p>
+      <br />
       <p>
         Contamos con entrenadores de
-        <span className="text-[#cf9050] "> primer nivel</span>, en el cual
-        buscamos poder ofrecer clases que sean personalizadas, para que puedas
-        mejorar y lograr los objetivos que te propongas.
+        <span className="text-[#cf9050] "> primer nivel</span>, que estarán
+        disponibles para tí en todo momento dentro del gimnasio, y buscaremos
+        ofrecerte clases que sean personalizadas y la oportunidad de desarrollar
+        para ti una rutina de ejercicios para que puedas mejorar y lograr los
+        objetivos que te propongas.
       </p>
       <br />
       <p className="">
