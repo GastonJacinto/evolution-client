@@ -7,19 +7,6 @@ import toast from 'react-hot-toast';
 import { loadAllPlans } from '@/app/redux/features/allPlansSlice';
 
 export default function SectionTwo() {
-  const dispatch = useAppDispatch();
-  useEffect(() => {
-    dispatchToChargePlans();
-  });
-  async function dispatchToChargePlans() {
-    const { plans, error } = await getAllPlans();
-    if (error) {
-      return toast.error(error);
-    }
-    if (plans) {
-      return dispatch(loadAllPlans(plans));
-    }
-  }
   const fadeInAnimationVariants = {
     initial: {
       opacity: 0,

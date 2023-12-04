@@ -122,15 +122,7 @@ export default function NavBar() {
         </Button>
       )}
       {/* )} */}
-      <Button
-        size="sm"
-        onPress={() => {
-          router.push('/dashboard');
-        }}
-        className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
-      >
-        Dashboard
-      </Button>
+
       {
         //! ----------------- ESTO SE BORRA DESPUES -----------------
       }
