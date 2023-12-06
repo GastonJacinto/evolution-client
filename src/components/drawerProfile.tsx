@@ -54,7 +54,7 @@ const DrawerProfile = () => {
           )}
         </button>
       ) : (
-        <div className="absolute z-20 top-4 left-1 w-[1.5rem] h-[1.5rem] animate-spin border-b-2 border white rounded-full"></div>
+        <div className="absolute z-20 top-4 left-1 w-[1.5rem] h-[1.5rem] animate-spin border-b-2 border-[#f59b4b] rounded-full"></div>
       )}
       <div
         className={`relative h-full p-2 flex flex-col items-center text-[#f3f0e5] overflow-auto ${
