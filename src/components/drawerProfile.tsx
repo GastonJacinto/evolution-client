@@ -36,7 +36,7 @@ const DrawerProfile = () => {
   const userGender = userProfile.genre === 'masc' ? 'Bienvenido' : 'Bienvenida';
   return (
     <div
-      className={` fixed z-10 mt-[5.63rem] pb-16 h-full flex flex-col  transition-all  ${
+      className={` fixed z-10 mt-[4rem] pb-16 h-full flex flex-col  transition-all  ${
         !open
           ? 'w-[2rem] bg-opacity-100 '
           : 'bg-zinc-700 w-[15rem]  bg-opacity-90 '
@@ -45,7 +45,7 @@ const DrawerProfile = () => {
       {userProfile.email ? (
         <button
           onClick={toggleOpen}
-          className="absolute z-[1000] top-0 right-0 w-[2rem] h-[2rem] flex items-center justify-center transition-all"
+          className="absolute z-[1000] top-3 right-0 w-[2rem] h-[2rem] flex items-center justify-center transition-all"
         >
           {open ? (
             <BiArrowToLeft className="w-[1.5rem] h-[1.5rem] duration-400 text-white hover:-translate-x-1" />
