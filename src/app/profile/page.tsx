@@ -77,7 +77,7 @@ export default function Profile() {
   };
 
   return (
-    <div className="w-full flex items-center pt-10 text-black font-bold h-[100vh]">
+    <div className="w-full flex items-center pt-10 text-black mb-10 font-bold h-[100vh]">
       <DrawerProfile />
       {displayInfo(tab)}
     </div>

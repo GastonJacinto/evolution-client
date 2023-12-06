@@ -111,7 +111,7 @@ export default function Dashboard() {
   }
   //! ------------------------ V A R I A B L E S ------------------------------------
   return (
-    <div className="w-full pt-16 flex flex-col items-center text-black font-bold">
+    <div className="w-full pt-16 flex flex-col items-center text-black font-bold mb-10">
       <div className=" justify-center p-3 gap-2 items-center mb-5 flex flex-wrap">
         {
           //! ---------- DROPDOWN MENU PARA CLASES-----------}
