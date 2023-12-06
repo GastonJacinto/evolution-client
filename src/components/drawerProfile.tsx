@@ -36,7 +36,7 @@ const DrawerProfile = () => {
   const userGender = userProfile.genre === 'masc' ? 'Bienvenido' : 'Bienvenida';
   return (
     <div
-      className={` fixed z-10 mt-[4rem] pb-16 h-full flex flex-col  transition-all  ${
+      className={` fixed z-10 mt-[4rem] h-[100vh] pb-16 flex flex-col transition-all  ${
         !open
           ? 'w-[2rem] bg-opacity-100 '
           : 'bg-zinc-700 w-[15rem]  bg-opacity-90 '
