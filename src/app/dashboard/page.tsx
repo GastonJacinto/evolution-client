@@ -33,13 +33,21 @@ import EditPlanDashboard from '@/components/dashboardComponents/allPlans/editPla
 import { getAllPlans } from '../api/actions/getPlans';
 import { loadAllPlans } from '../redux/features/allPlansSlice';
 import AddInstructorDashboard from '@/components/dashboardComponents/allInstructors/addInstructor';
+import LoginDashboard from '@/components/dashboardComponents/loginDashboard/loginDashboard';
+import { BiLogOutCircle } from 'react-icons/bi';
 export default function Dashboard() {
   //!---------------------- H O O K S ---------------------------------
   const [tab, setTab] = React.useState('');
   const dispatch = useAppDispatch();
   const classes = useAppSelector((state) => state.gymClassesSlice.allClasses);
-
+  const [adminLoggedIn, setAdminLoggedIn] = React.useState(false);
   React.useEffect(() => {
+    const adminLoggedIn = localStorage.getItem('adminLoggedIn') || '';
+    if (adminLoggedIn) {
+      setAdminLoggedIn(true);
+    } else {
+      setAdminLoggedIn(false);
+    }
     getAllInstructors();
     getAllUsers();
     getClassesToTable();
@@ -111,140 +119,155 @@ export default function Dashboard() {
   }
   //! ------------------------ V A R I A B L E S ------------------------------------
   return (
-    <div className="w-full pt-16 flex flex-col items-center text-black font-bold mb-10">
-      <div className=" justify-center p-3 gap-2 items-center mb-5 flex flex-wrap">
-        {
-          //! ---------- DROPDOWN MENU PARA CLASES-----------}
-        }
-        <Dropdown
-          aria-label="dropdown-clases"
-          className="border-1 border-zinc-900"
-        >
-          <DropdownTrigger>
-            <Button
-              startContent={<IoMdArrowDropdownCircle />}
-              className="bg-[#f59b4b]"
+    <>
+      {adminLoggedIn ? (
+        <div className="w-full pt-16 flex flex-col items-center text-black font-bold mb-10">
+          <div className=" justify-center p-3 gap-2 items-center mb-5 flex flex-wrap">
+            {
+              //! ---------- DROPDOWN MENU PARA CLASES-----------}
+            }
+            <Dropdown
+              aria-label="dropdown-clases"
+              className="border-1 border-zinc-900"
             >
-              Clases
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu aria-label="dropdown-menu">
-            {itemsDashboardsClasse.map((item, i) => {
-              return (
-                <DropdownItem
-                  textValue={item.name}
-                  className={`border-1 border-black  ${
-                    item.id === tab
-                      ? 'bg-[#f59b4b]  shadow-md shadow-[#f59a4b42]'
-                      : 'bg-gray-200'
-                  } transition-all`}
-                  onClick={() => {
-                    setTab(item.id);
-                  }}
-                  key={i}
-                  description={item.description}
-                  startContent={React.cloneElement(
-                    item.icon as React.ReactElement,
-                    {
-                      className: 'text-3xl',
-                    }
-                  )}
+              <DropdownTrigger>
+                <Button
+                  startContent={<IoMdArrowDropdownCircle />}
+                  className="bg-[#f59b4b]"
                 >
-                  <span className="font-semibold">{item.name}</span>
-                </DropdownItem>
-              );
-            })}
-          </DropdownMenu>
-        </Dropdown>
+                  Clases
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="dropdown-menu">
+                {itemsDashboardsClasse.map((item, i) => {
+                  return (
+                    <DropdownItem
+                      textValue={item.name}
+                      className={`border-1 border-black  ${
+                        item.id === tab
+                          ? 'bg-[#f59b4b]  shadow-md shadow-[#f59a4b42]'
+                          : 'bg-gray-200'
+                      } transition-all`}
+                      onClick={() => {
+                        setTab(item.id);
+                      }}
+                      key={i}
+                      description={item.description}
+                      startContent={React.cloneElement(
+                        item.icon as React.ReactElement,
+                        {
+                          className: 'text-3xl',
+                        }
+                      )}
+                    >
+                      <span className="font-semibold">{item.name}</span>
+                    </DropdownItem>
+                  );
+                })}
+              </DropdownMenu>
+            </Dropdown>
 
-        {
-          //! ---------- DROPDOWN MENU PARA PLANES ----------}
-        }
-        <Dropdown
-          aria-label="dropdown-planes"
-          className="border-1 border-zinc-900"
-        >
-          <DropdownTrigger>
-            <Button
-              startContent={<IoMdArrowDropdownCircle />}
-              className="bg-[#f59b4b]"
+            {
+              //! ---------- DROPDOWN MENU PARA PLANES ----------}
+            }
+            <Dropdown
+              aria-label="dropdown-planes"
+              className="border-1 border-zinc-900"
             >
-              Planes
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu aria-label="dropdown-menu">
-            {itemsDashboardsPlans.map((item, i) => {
-              return (
-                <DropdownItem
-                  textValue={item.name}
-                  className={`border-1 border-black  ${
-                    item.id === tab
-                      ? 'bg-[#f59b4b]  shadow-md shadow-[#f59a4b42]'
-                      : 'bg-gray-200'
-                  } transition-all`}
-                  onClick={() => {
-                    setTab(item.id);
-                  }}
-                  key={i}
-                  description={item.description}
-                  startContent={React.cloneElement(
-                    item.icon as React.ReactElement,
-                    {
-                      className: 'text-3xl',
-                    }
-                  )}
+              <DropdownTrigger>
+                <Button
+                  startContent={<IoMdArrowDropdownCircle />}
+                  className="bg-[#f59b4b]"
                 >
-                  <span className="font-semibold">{item.name}</span>
-                </DropdownItem>
-              );
-            })}
-          </DropdownMenu>
-        </Dropdown>
-        {
-          //! ---------- DROPDOWN MENU PARA USUARIOS E INSTRUCTORES-----------}
-        }
-        <Dropdown
-          aria-label="dropdown-users-instructors"
-          className="border-1 border-zinc-900"
-        >
-          <DropdownTrigger>
-            <Button
-              startContent={<IoMdArrowDropdownCircle />}
-              className="bg-[#f59b4b]"
+                  Planes
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="dropdown-menu">
+                {itemsDashboardsPlans.map((item, i) => {
+                  return (
+                    <DropdownItem
+                      textValue={item.name}
+                      className={`border-1 border-black  ${
+                        item.id === tab
+                          ? 'bg-[#f59b4b]  shadow-md shadow-[#f59a4b42]'
+                          : 'bg-gray-200'
+                      } transition-all`}
+                      onClick={() => {
+                        setTab(item.id);
+                      }}
+                      key={i}
+                      description={item.description}
+                      startContent={React.cloneElement(
+                        item.icon as React.ReactElement,
+                        {
+                          className: 'text-3xl',
+                        }
+                      )}
+                    >
+                      <span className="font-semibold">{item.name}</span>
+                    </DropdownItem>
+                  );
+                })}
+              </DropdownMenu>
+            </Dropdown>
+            {
+              //! ---------- DROPDOWN MENU PARA USUARIOS E INSTRUCTORES-----------}
+            }
+            <Dropdown
+              aria-label="dropdown-users-instructors"
+              className="border-1 border-zinc-900"
             >
-              Usuarios/Instructores
-            </Button>
-          </DropdownTrigger>
-          <DropdownMenu aria-label="dropdown-menu">
-            {itemsDashboardsUsers.map((item, i) => {
-              return (
-                <DropdownItem
-                  textValue={item.name}
-                  className={`border-1 border-black  ${
-                    item.id === tab
-                      ? 'bg-[#f59b4b]  shadow-md shadow-[#f59a4b42]'
-                      : 'bg-gray-200'
-                  } transition-all`}
-                  onClick={() => {
-                    setTab(item.id);
-                  }}
-                  key={i}
-                  description={item.description}
-                  startContent={React.cloneElement(
-                    item.icon as React.ReactElement,
-                    {
-                      className: 'text-3xl',
-                    }
-                  )}
+              <DropdownTrigger>
+                <Button
+                  startContent={<IoMdArrowDropdownCircle />}
+                  className="bg-[#f59b4b]"
                 >
-                  <span className="font-semibold">{item.name}</span>
-                </DropdownItem>
-              );
-            })}
-          </DropdownMenu>
-        </Dropdown>
-      </div>
-      {displayInfo(tab)}
-    </div>
+                  Usuarios/Instructores
+                </Button>
+              </DropdownTrigger>
+              <DropdownMenu aria-label="dropdown-menu">
+                {itemsDashboardsUsers.map((item, i) => {
+                  return (
+                    <DropdownItem
+                      textValue={item.name}
+                      className={`border-1 border-black  ${
+                        item.id === tab
+                          ? 'bg-[#f59b4b]  shadow-md shadow-[#f59a4b42]'
+                          : 'bg-gray-200'
+                      } transition-all`}
+                      onClick={() => {
+                        setTab(item.id);
+                      }}
+                      key={i}
+                      description={item.description}
+                      startContent={React.cloneElement(
+                        item.icon as React.ReactElement,
+                        {
+                          className: 'text-3xl',
+                        }
+                      )}
+                    >
+                      <span className="font-semibold">{item.name}</span>
+                    </DropdownItem>
+                  );
+                })}
+              </DropdownMenu>
+            </Dropdown>
+            <Button
+              startContent={<BiLogOutCircle className="text-2xl" />}
+              className="bg-red-200 font-bold text-red-700"
+              onPress={() => {
+                localStorage.removeItem('adminLoggedIn');
+              }}
+            >
+              Salir
+            </Button>
+          </div>
+          {displayInfo(tab)}
+        </div>
+      ) : (
+        <LoginDashboard />
+      )}
+    </>
   );
 }

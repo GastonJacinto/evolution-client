@@ -21,12 +21,15 @@ import { BiUser } from 'react-icons/bi';
 import { useAppSelector } from '@/utils/hooks';
 import { useRouter } from 'next/navigation';
 import { IoMdLogIn } from 'react-icons/io';
-
+import { CiLogout } from 'react-icons/ci';
 export default function NavBar() {
+  //!---------------------- H O O K S ---------------------------------
   const router = useRouter();
   const { data: session } = useSession();
-  const userProfile = useAppSelector((state) => state.myProfileSlice.myProfile);
   const pathname = usePathname();
+
+  //! ------------------------ V A R I A B L E S ------------------------------------
+
   return (
     <Navbar isBordered className="fixed bg-black bg-opacity-60 h-[4rem] ">
       {pathname === '/' && (
@@ -98,29 +101,30 @@ export default function NavBar() {
         //! ----------------- ESTO SE BORRA DESPUES -----------------
       }
 
-      {session ? (
-        <Button
-          size="sm"
-          onPress={() => {
-            router.push('/profile');
-          }}
-          startContent={<BiUser className="registerIcons" />}
-          className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
-        >
-          Mi perfil
-        </Button>
-      ) : pathname === '/auth/login' ? null : (
-        <Button
-          size="sm"
-          onPress={() => {
-            router.push('/auth/login');
-          }}
-          startContent={<IoMdLogIn className="registerIcons" />}
-          className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
-        >
-          Iniciar sesión
-        </Button>
-      )}
+      {pathname !== '/dashboard' &&
+        (session ? (
+          <Button
+            size="sm"
+            onPress={() => {
+              router.push('/profile');
+            }}
+            startContent={<BiUser className="registerIcons" />}
+            className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
+          >
+            Mi perfil
+          </Button>
+        ) : pathname === '/auth/login' ? null : (
+          <Button
+            size="sm"
+            onPress={() => {
+              router.push('/auth/login');
+            }}
+            startContent={<IoMdLogIn className="registerIcons" />}
+            className="bg-[#f59b4b] font-semibold text-zinc-900 hover:scale-105 md:text-medium "
+          >
+            Iniciar sesión
+          </Button>
+        ))}
       {/* )} */}
 
       {

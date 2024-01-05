@@ -18,6 +18,7 @@ import { useRouter } from 'next/navigation';
 import { getAllPlans } from '../api/actions/getPlans';
 import { loadAllPlans } from '../redux/features/allPlansSlice';
 import EditProfile from '@/components/editProfile/editProfile';
+import PastClasses from '@/components/pastClasses/pastClasses';
 
 export default function Profile() {
   //!----------- HOOKS -----------------
@@ -66,10 +67,12 @@ export default function Profile() {
       case 1:
         return <MyClasses />;
       case 2:
-        return <AllClasses />;
+        return <PastClasses />;
       case 3:
-        return <RechargeCredits />;
+        return <AllClasses />;
       case 4:
+        return <RechargeCredits />;
+      case 5:
         return <EditProfile />;
       default:
         return <MyClasses />;

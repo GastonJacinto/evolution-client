@@ -1,8 +1,6 @@
 import React from 'react';
-import { CgProfile } from 'react-icons/cg';
-import { MdSecurity, MdSportsGymnastics } from 'react-icons/md';
-import { BiMoneyWithdraw } from 'react-icons/bi';
-import { BsCalendarCheck, BsPersonFillAdd, BsTable } from 'react-icons/bs';
+import { MdSecurity } from 'react-icons/md';
+import { BsPersonFillAdd } from 'react-icons/bs';
 import { PlanEnum } from '@/utils/types';
 import { GrTable, GrTableAdd } from 'react-icons/gr';
 import { FaUsers, FaUsersGear } from 'react-icons/fa6';
@@ -11,6 +9,13 @@ import { FaEdit, FaUserCog } from 'react-icons/fa';
 import { BsCashCoin } from 'react-icons/bs';
 import { FaCalendarAlt } from 'react-icons/fa';
 import { GiConqueror } from 'react-icons/gi';
+import { LuUserCog } from 'react-icons/lu';
+import {
+  TbCalendarRepeat,
+  TbCalendarPlus,
+  TbCalendarStats,
+} from 'react-icons/tb';
+import { GiReceiveMoney } from 'react-icons/gi';
 
 export const navLinks = [
   {
@@ -124,22 +129,27 @@ export const drawerOptions = [
   {
     name: 'Mis clases',
     tab: 1,
-    icon: React.createElement(MdSportsGymnastics),
+    icon: React.createElement(TbCalendarStats),
+  },
+  {
+    name: 'Clases pasadas',
+    tab: 2,
+    icon: React.createElement(TbCalendarRepeat),
   },
   {
     name: 'Reservar una clase',
-    tab: 2,
-    icon: React.createElement(BsCalendarCheck),
+    tab: 3,
+    icon: React.createElement(TbCalendarPlus),
   },
   {
     name: 'Recargar créditos',
-    tab: 3,
-    icon: React.createElement(BiMoneyWithdraw),
+    tab: 4,
+    icon: React.createElement(GiReceiveMoney),
   },
   {
     name: 'Editar mi perfil',
-    tab: 4,
-    icon: React.createElement(CgProfile),
+    tab: 5,
+    icon: React.createElement(LuUserCog),
   },
 ] as const;
 

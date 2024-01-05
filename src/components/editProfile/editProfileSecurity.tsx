@@ -1,4 +1,4 @@
-import { Button, Input } from '@nextui-org/react';
+import { Button, Divider, Input } from '@nextui-org/react';
 import React from 'react';
 import { GrSecure } from 'react-icons/gr';
 import toast from 'react-hot-toast';
@@ -8,28 +8,41 @@ import { ChangePasswordType } from '@/utils/types';
 import { useRouter } from 'next/navigation';
 import { motion } from 'framer-motion';
 import { signOut, useSession } from 'next-auth/react';
+import { set } from 'date-fns';
 export default function EditProfileSecurity() {
   //!---------------------- HOOKS -----------------------
   const { data: session } = useSession();
   const [pending, setPending] = React.useState(false);
   const userProfile = useAppSelector((state) => state.myProfileSlice.myProfile);
   const router = useRouter();
+  const [repeatPass, setRepeatPass] = React.useState('');
   const [formData, setFormData] = React.useState<ChangePasswordType>({
     newPassword: '',
     actualPassword: '',
     email: userProfile.email,
   });
+  const [canChange, setCanChange] = React.useState(false);
   //!---------------------- FUNCTIONS -----------------------
-
+  React.useEffect(() => {
+    if (repeatPass === formData.newPassword && repeatPass !== '') {
+      setCanChange(true);
+    } else {
+      setCanChange(false);
+    }
+  }, [repeatPass, formData.newPassword]);
   const handleChange = (
     event:
       | React.ChangeEvent<HTMLInputElement>
       | React.ChangeEvent<HTMLSelectElement>
   ) => {
-    setFormData({
-      ...formData,
-      [event.target.name]: event.target.value,
-    });
+    if (event.target.name === 'repeatPassword') {
+      setRepeatPass(event.target.value);
+    } else {
+      setFormData({
+        ...formData,
+        [event.target.name]: event.target.value,
+      });
+    }
   };
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     setPending(true);
@@ -97,13 +110,28 @@ export default function EditProfileSecurity() {
         placeholder="**********"
         aria-label="password"
         onChange={handleChange}
+        value={formData.actualPassword}
+        type={'password'}
+        className=" text-black"
+        isRequired
+      />
+      <Divider className="bg-white w-full my-1 " />
+      <Input
+        name="newPassword"
+        label="Contraseña nueva"
+        placeholder="**********"
+        minLength={8}
+        value={formData.newPassword}
+        aria-label="password"
+        onChange={handleChange}
         type={'password'}
         className=" text-black"
         isRequired
       />
       <Input
-        name="newPassword"
-        label="Contraseña nueva"
+        name="repeatPassword"
+        value={repeatPass}
+        label="Repita la contraseña"
         placeholder="**********"
         minLength={8}
         aria-label="password"
@@ -114,7 +142,7 @@ export default function EditProfileSecurity() {
       />
       <Button
         type="submit"
-        isDisabled={pending}
+        isDisabled={!canChange || pending}
         className="group bg-[#f59b4b] text-black font-semibold  flex items-center p-2 w-[100%]  rounded-xl gap-2 justify-center hover:scale-110 active:scale-105 transition-all mt-5"
       >
         {pending ? (
